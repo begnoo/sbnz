@@ -20,15 +20,17 @@ public class TestController {
     this.kieContainer = kieContainer;
   }
 
-  @RequestMapping(value = "/tes", method = RequestMethod.GET, produces = "application/json")
-	public User getQuestions() {
+  @RequestMapping(value = "/test-rule", method = RequestMethod.GET, produces = "application/json")
+	public User testRule() {
 		User newUser = new User();
 
-    KieSession kieSession = kieContainer.newKieSession();
-    kieSession.insert(newUser);
-    kieSession.fireAllRules();
-    kieSession.dispose();
+        newUser.setFirstName("Mile");
+        newUser.setLastName("<O>");
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(newUser);
+        kieSession.fireAllRules();
+        kieSession.dispose();
 
-		return newUser;
+        return newUser;
 	}
 }
