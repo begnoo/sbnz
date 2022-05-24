@@ -1,0 +1,8 @@
+package domb.rules;
+
+rule "Test Rule"
+  when
+    eval(true)
+  then
+    System.out.println("Hello World");
+end
