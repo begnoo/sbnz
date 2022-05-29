@@ -25,7 +25,7 @@ public class TestController {
 		User newUser = new User();
 
         newUser.setFirstName("Mile");
-        newUser.setLastName("<O>");
+        newUser.setLastName("<O><O><O><O><O>");
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(newUser);
         kieSession.fireAllRules();

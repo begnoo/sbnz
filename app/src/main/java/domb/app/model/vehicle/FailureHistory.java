@@ -1,4 +1,4 @@
-package domb.sbnz.model.vehicle;
+package domb.app.model.vehicle;
 
 import java.util.List;
 

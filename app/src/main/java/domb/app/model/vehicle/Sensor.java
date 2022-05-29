@@ -1,7 +1,7 @@
-package domb.sbnz.model.vehicle;
+package domb.app.model.vehicle;
 
-import domb.sbnz.model.BaseEntity;
-import domb.sbnz.model.enums.SensorType;
+import domb.app.model.BaseEntity;
+import domb.app.model.enums.SensorType;
 
 import java.util.List;
 

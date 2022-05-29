@@ -1,6 +1,6 @@
-package domb.sbnz.model.events;
+package domb.app.model.events;
 
-import domb.sbnz.model.vehicle.Failure;
+import domb.app.model.vehicle.Failure;
 
 import java.util.List;
 

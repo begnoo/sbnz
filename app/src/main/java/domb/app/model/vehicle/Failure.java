@@ -1,6 +1,6 @@
-package domb.sbnz.model.vehicle;
+package domb.app.model.vehicle;
 
-import domb.sbnz.model.BaseEntity;
+import domb.app.model.BaseEntity;
 
 public class Failure extends BaseEntity {
 

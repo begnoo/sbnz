@@ -1,4 +1,4 @@
-package domb.sbnz.model;
+package domb.app.model;
 
 import java.util.UUID;
 

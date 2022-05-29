@@ -1,4 +1,4 @@
-package domb.sbnz.model.events;
+package domb.app.model.events;
 
 public class ExtremeAverageEvent extends Event {
     private double offsetFromAverage;

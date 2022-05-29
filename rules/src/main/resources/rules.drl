@@ -1,8 +1,12 @@
 package domb.rules;
 
+import domb.app.model.User;
+
 rule "Test Rule"
   when
     eval(true)
   then
-    System.out.println("Hello World");
+    User user = new User();
+    user.setPassword("gaga");
+    System.out.println(user.getPassword());
 end

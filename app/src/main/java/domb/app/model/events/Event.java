@@ -1,4 +1,4 @@
-package domb.sbnz.model.events;
+package domb.app.model.events;
 
 import domb.sbnz.model.BaseEntity;
 

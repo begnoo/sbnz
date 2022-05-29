@@ -1,4 +1,4 @@
-package domb.sbnz.model;
+package domb.app.model;
 
 public class User extends BaseEntity {
     private String email;
