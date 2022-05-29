@@ -9,7 +9,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
+@SQLDelete(sql = "UPDATE sensor SET active = false WHERE id = ?")
+@Where(clause = "active = true")
 public class Sensor extends BaseEntity {
     
     @Column

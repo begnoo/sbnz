@@ -8,7 +8,12 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
+@SQLDelete(sql = "UPDATE obd_diagnostic SET active = false WHERE id = ?")
+@Where(clause = "active = true")
 public class ObdDiagnostic extends BaseEntity {
     
     @OneToMany

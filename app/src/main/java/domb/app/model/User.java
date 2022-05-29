@@ -9,8 +9,8 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "users")
-@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id = ?")
-@Where(clause = "deleted = false")
+@SQLDelete(sql = "UPDATE users SET active = false WHERE id = ?")
+@Where(clause = "active = true")
 public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true)

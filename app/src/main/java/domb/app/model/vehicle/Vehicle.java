@@ -2,12 +2,16 @@ package domb.app.model.vehicle;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import domb.app.model.BaseEntity;
 
 @Entity
+@SQLDelete(sql = "UPDATE vehicle SET active = false WHERE id = ?")
+@Where(clause = "active = true")
 public class Vehicle extends BaseEntity {
 
     @Column
