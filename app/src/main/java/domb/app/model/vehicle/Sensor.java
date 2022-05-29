@@ -5,11 +5,25 @@ import domb.app.model.enums.SensorType;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Sensor extends BaseEntity {
+    
+    @Column
     private SensorType type;
+    
+    @Column
     private double normalAvgValue;
+    
+    @Column
     private String measuringUnit;
-    private List<Double> values;
+    
+    @Column
+    @OneToMany
+    private List<SensorValue> values;
 
     public SensorType getType() {
         return type;
@@ -35,11 +49,12 @@ public class Sensor extends BaseEntity {
         this.measuringUnit = measuringUnit;
     }
 
-    public List<Double> getValues() {
-        return values;
+    public List<SensorValue> getValues() {
+        return this.values;
     }
 
-    public void setValues(List<Double> values) {
+    public void setValues(List<SensorValue> values) {
         this.values = values;
     }
+
 }

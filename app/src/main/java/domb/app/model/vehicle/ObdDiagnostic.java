@@ -1,11 +1,20 @@
 package domb.app.model.vehicle;
 
-import domb.sbnz.model.BaseEntity;
+import domb.app.model.BaseEntity;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+@Entity
 public class ObdDiagnostic extends BaseEntity {
+    
+    @OneToMany
     private List<Sensor> sensors;
+    
+    @ElementCollection
     private List<String> faultCodes;
 
     public List<Sensor> getSensors() {

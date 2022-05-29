@@ -1,13 +1,28 @@
 package domb.app.model.vehicle;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import domb.app.model.BaseEntity;
 
+@Entity
 public class Vehicle extends BaseEntity {
 
+    @Column
     private String model;
+    
+    @Column
     private String manufacturer;
+    
+    @Column
     private String engineModel;
+    
+    @OneToOne
     private FailureHistory failuresHistory;
+    
+    @OneToOne
     private ObdDiagnostic obdDiagnostic;
 
     public String getModel() {

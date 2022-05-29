@@ -2,7 +2,15 @@ package domb.app.model.vehicle;
 
 import java.util.List;
 
-public class FailureHistory {
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import domb.app.model.BaseEntity;
+
+@Entity
+public class FailureHistory extends BaseEntity {
+
+    @OneToMany
     private List<Failure> failures;
 
     public List<Failure> getFailures() {

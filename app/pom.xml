@@ -25,6 +25,9 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
   	</properties>
 	<dependencies>
+
+		<!-- spring boot -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -41,6 +44,20 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- database -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<!-- rules -->
 
 		<dependency>
 			<groupId>org.kie</groupId>
@@ -64,12 +81,6 @@
 			<groupId>org.drools</groupId>
 			<artifactId>drools-compiler</artifactId>
 			<version>${drools.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>domb</groupId>
-			<artifactId>sbnz</artifactId>
-			<version>${sbnz.version}</version>
 		</dependency>
 
 	</dependencies>
