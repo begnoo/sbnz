@@ -1,12 +1,15 @@
 package domb.rules;
 
-import domb.app.model.User;
+import function domb.rules.DroolsUtils.debugLhsValue;
+import domb.app.model.BaseEntity;
+import domb.app.model.vehicle.Vehicle;
+import domb.app.model.statuses.SoundEnum;
 
-rule "Test Rule"
+
+rule "SquelingNoiseRule"
   when
-    eval(true)
+    $vehicle: Vehicle($sound: sound contains SoundEnum.SquealingNoise) 
   then
-    User user = new User();
-    user.setPassword("gaga");
-    System.out.println(user.getPassword());
+    System.out.println("ovo kao radi");
+
 end
