@@ -1,22 +1,19 @@
 package domb.rules;
 
-import java.util.UUID;
-
 
 public class BaseEntity {
 
-
-    private UUID id;
+    private long id;
     
     private boolean active;
     
     private long createdAt;
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 

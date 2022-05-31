@@ -5,8 +5,7 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import domb.app.model.vehicle.Vehicle;
-
+import domb.app.model.vehicle.Failure;
 @Service
 public class DiagnoseService {
   
@@ -18,15 +17,15 @@ public class DiagnoseService {
         this.kieContainer = kieContainer;
     }
 
-    public void diagnoseBasedOnUserData(Vehicle vehicle) {
+    public void diagnoseBasedOnUserData(Failure failure) {
 
-        vehicle.setManufacturer("manufacturer");
-        System.out.println(vehicle.getSound());
+        System.out.println(failure.getQuestionId());
+        System.out.println(failure.getAnswerValue());
         KieSession kieSession = kieContainer.newKieSession();
-        kieSession.insert(vehicle);
+        kieSession.insert(failure);
         kieSession.fireAllRules();
         kieSession.dispose();
-
+        System.out.println(failure.getType());
     }
 
 }

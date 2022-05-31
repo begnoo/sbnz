@@ -4,14 +4,13 @@ package domb.app.controllers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import domb.app.model.vehicle.Vehicle;
-import domb.app.requests.UserDiagnosticRequest;
+import domb.app.model.vehicle.Failure;
+import domb.app.requests.FailureRequest;
 import domb.app.services.DiagnoseService;
 
 @RestController
@@ -28,9 +27,9 @@ public class DiagnosticController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void userDiagnose(@RequestBody UserDiagnosticRequest request) {
-        Vehicle vehicle = modelMapper.map(request, Vehicle.class);
-        this.diagnoseService.diagnoseBasedOnUserData(vehicle);
+    public void userDiagnose(@RequestBody FailureRequest request) {
+        Failure failure = modelMapper.map(request, Failure.class);
+        this.diagnoseService.diagnoseBasedOnUserData(failure);
     }
 
 }

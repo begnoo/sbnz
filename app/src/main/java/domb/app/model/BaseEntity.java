@@ -1,13 +1,10 @@
 package domb.app.model;
 
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Where;
 
 @MappedSuperclass
@@ -15,10 +12,8 @@ import org.hibernate.annotations.Where;
 public class BaseEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-    
-    private UUID id;
+    @GeneratedValue(generator = "long")
+    private long id;
     
     @Column(columnDefinition = "boolean default true", nullable = false)
     private boolean active;
@@ -26,11 +21,11 @@ public class BaseEntity {
     @Column
     private long createdAt;
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 

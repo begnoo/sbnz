@@ -1,15 +1,33 @@
 package domb.rules;
 
 import function domb.rules.DroolsUtils.debugLhsValue;
-import domb.app.model.BaseEntity;
-import domb.app.model.vehicle.Vehicle;
-import domb.app.model.statuses.SoundEnum;
+import domb.app.model.vehicle.Failure;
 
 
-rule "SquelingNoiseRule"
+rule "SquelingNoise The Engine"
   when
-    $vehicle: Vehicle($sound: sound contains SoundEnum.SquealingNoise) 
+    $failure: Failure(questionId == 1  && answerValue == "The engine") 
   then
-    System.out.println("ovo kao radi");
+    System.out.println("RULE EXECUTED: SquelingNoise The Engine");
+    $failure.setType("ENGINE");
+
+end
+
+
+rule "SquelingNoise The Brakes"
+  when
+    $failure: Failure(questionId == 2  && answerValue == "Yes") 
+  then
+    System.out.println("RULE EXECUTED: SquelingNoise The Brakes");
+    $failure.setType("BRAKES");
+
+end
+
+rule "SquelingNoise The Brakes Normal"
+  when
+    $failure: Failure(questionId == 2  && answerValue=="No") 
+  then
+    System.out.println("RULE EXECUTED: SquelingNoise The Brakes Normal");
+    $failure.setType("NORMAL");
 
 end
