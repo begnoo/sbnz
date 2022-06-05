@@ -8,6 +8,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import domb.app.model.BaseEntity;
+import domb.app.model.enums.PartEnum;
 
 @Entity
 @SQLDelete(sql = "UPDATE failure SET active = false WHERE id = ?")
@@ -15,8 +16,17 @@ import domb.app.model.BaseEntity;
 public class Failure extends BaseEntity {
 
     @Column
-    private String type;
+    private PartEnum part;
+
+    @Column
+    private String vehicleManufacturer;
     
+    @Column
+    private String vehicleModel;
+
+    @Column
+    private long vehicleYear;
+
     @Transient
     private long questionId;
     
@@ -26,12 +36,12 @@ public class Failure extends BaseEntity {
     public Failure() {
     }
 
-    public String getType() {
-        return type;
+    public PartEnum getPart() {
+        return this.part;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPart(PartEnum part) {
+        this.part = part;
     }
 
     public long getQuestionId() {
@@ -49,6 +59,31 @@ public class Failure extends BaseEntity {
 
     public void setAnswerValue(String answerValue) {
         this.answerValue = answerValue;
+    }
+
+
+    public String getVehicleManufacturer() {
+        return this.vehicleManufacturer;
+    }
+
+    public void setVehicleManufacturer(String vehicleManufacturer) {
+        this.vehicleManufacturer = vehicleManufacturer;
+    }
+
+    public String getVehicleModel() {
+        return this.vehicleModel;
+    }
+
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
+    }
+
+    public long getVehicleYear() {
+        return this.vehicleYear;
+    }
+
+    public void setVehicleYear(long vehicleYear) {
+        this.vehicleYear = vehicleYear;
     }
 
 }

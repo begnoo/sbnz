@@ -4,6 +4,10 @@ public class FailureRequest {
     
     private long questionId;
     private String answerValue;
+    private String vehicleManufacturer;
+    private String vehicleModel;
+    private String vehicleYear;
+
 
 
     public long getQuestionId() {
@@ -22,6 +26,29 @@ public class FailureRequest {
     public void setAnswerValue(String answerValue) {
         this.answerValue = answerValue;
     }
-    
+
+    public String getVehicleManufacturer() {
+        return this.vehicleManufacturer;
+    }
+
+    public void setVehicleManufacturer(String vehicleManufacturer) {
+        this.vehicleManufacturer = vehicleManufacturer;
+    }
+
+    public String getVehicleModel() {
+        return this.vehicleModel;
+    }
+
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
+    }
+
+    public String getVehicleYear() {
+        return this.vehicleYear;
+    }
+
+    public void setVehicleYear(String vehicleYear) {
+        this.vehicleYear = vehicleYear;
+    }
 
 }

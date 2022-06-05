@@ -6,15 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import domb.app.model.vehicle.Failure;
+import domb.app.repositories.FailureRepository;
 @Service
 public class DiagnoseService {
   
     private final KieContainer kieContainer;
+    private final FailureRepository failureRepository;
 
     @Autowired
-    public DiagnoseService(KieContainer kieContainer) {
+    public DiagnoseService(KieContainer kieContainer, FailureRepository failureRepository) {
         super();
         this.kieContainer = kieContainer;
+        this.failureRepository = failureRepository;
     }
 
     public void diagnoseBasedOnUserData(Failure failure) {
@@ -25,7 +28,8 @@ public class DiagnoseService {
         kieSession.insert(failure);
         kieSession.fireAllRules();
         kieSession.dispose();
-        System.out.println(failure.getType());
+        System.out.println(failure.getPart());
+        failureRepository.save(failure);
     }
 
 }

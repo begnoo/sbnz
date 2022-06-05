@@ -16,3 +16,22 @@ INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (2, 'The brak
 
 INSERT INTO question_answers (question_id, answers_id) VALUES (1, 1), (1, 2);
 INSERT INTO question_answers (question_id, answers_id) VALUES (2, 3), (2, 4);
+
+-- 
+-- sounds like menu
+-- 
+INSERT INTO question (id, question) VALUES (4, 'What do you hear?');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (9, 'Squealing', 1);
+
+-- 
+-- main menu
+-- 
+INSERT INTO question (id, question) VALUES (3, 'What type of symptom do you have?');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (5, 'Sounds like', 4);
+INSERT INTO answer (id, answer_text) VALUES (6, 'Looks like');
+INSERT INTO answer (id, answer_text) VALUES (7, 'Smells like');
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (3, 5), (3, 6), (3, 7);
+
+-- answer count = 9
+-- auestion count = 4

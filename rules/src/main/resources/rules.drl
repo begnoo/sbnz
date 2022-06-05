@@ -2,32 +2,33 @@ package domb.rules;
 
 import function domb.rules.DroolsUtils.debugLhsValue;
 import domb.app.model.vehicle.Failure;
+import domb.app.model.enums.PartEnum;
 
 
-rule "SquelingNoise The Engine"
+rule "SquelingNoise -> DriveBelt"
   when
     $failure: Failure(questionId == 1  && answerValue == "The engine") 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Engine");
-    $failure.setType("ENGINE");
+    $failure.setPart(PartEnum.DRIVE_BELT);
 
 end
 
 
-rule "SquelingNoise The Brakes"
+rule "SquelingNoise -> BreakPads"
   when
     $failure: Failure(questionId == 2  && answerValue == "Yes") 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes");
-    $failure.setType("BRAKES");
+    $failure.setPart(PartEnum.BREAK_PADS);
 
 end
 
-rule "SquelingNoise The Brakes Normal"
+rule "SquelingNoise -> None"
   when
     $failure: Failure(questionId == 2  && answerValue=="No") 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes Normal");
-    $failure.setType("NORMAL");
+    $failure.setPart(PartEnum.NONE);
 
 end
