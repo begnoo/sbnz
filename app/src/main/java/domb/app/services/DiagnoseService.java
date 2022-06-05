@@ -1,5 +1,8 @@
 package domb.app.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +31,17 @@ public class DiagnoseService {
 
     public Instructions diagnoseBasedOnUserData(Failure failure) {
 
-        System.out.println(failure.getQuestionId());
-        System.out.println(failure.getAnswerValue());
+        System.out.println(failure.getId());
+        List<Failure> releatedFailures = failureRepository.findByVehicleManufacturerAndVehicleModel(failure.getVehicleManufacturer(), failure.getVehicleModel())
+                                        .orElse(new ArrayList<Failure>());
+        failure.setReleatedFailures(releatedFailures);
+
+        System.out.println(failure.getReleatedFailures().size());
+
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(failure);
         kieSession.fireAllRules();
         kieSession.dispose();
-        System.out.println(failure.getPart());
 
         if (failure.getPart() != PartEnum.NONE) {
             failureRepository.save(failure);

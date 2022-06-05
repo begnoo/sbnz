@@ -1,5 +1,7 @@
 package domb.app.model.vehicle;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -26,6 +28,9 @@ public class Failure extends BaseEntity {
 
     @Column
     private String vehicleYear;
+
+    @Transient
+    private List<Failure> releatedFailures;
 
     @Transient
     private long questionId;
@@ -85,5 +90,13 @@ public class Failure extends BaseEntity {
     public void setVehicleYear(String vehicleYear) {
         this.vehicleYear = vehicleYear;
     }
+
+    public List<Failure> getReleatedFailures() {
+        return this.releatedFailures;
+    }
+
+    public void setReleatedFailures(List<Failure> releatedFailures) {
+        this.releatedFailures = releatedFailures;
+    }    
 
 }

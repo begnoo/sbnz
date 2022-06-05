@@ -17,8 +17,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class BaseEntity {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Column(columnDefinition = "boolean default true", nullable = false)
     private boolean active = true;
@@ -27,11 +27,11 @@ public class BaseEntity {
     @CreatedDate
     private Long createdAt;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

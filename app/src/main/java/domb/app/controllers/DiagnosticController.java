@@ -33,6 +33,8 @@ public class DiagnosticController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InstructionsResponse> userDiagnose(@RequestBody FailureRequest request) {
         Failure failure = modelMapper.map(request, Failure.class);
+        failure.setId(null);
+        System.out.println(failure);
         Instructions instructions = this.diagnoseService.diagnoseBasedOnUserData(failure);
         
         return new ResponseEntity<>(this.modelMapper.map(instructions, InstructionsResponse.class), HttpStatus.OK);

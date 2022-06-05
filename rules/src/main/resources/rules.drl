@@ -6,12 +6,39 @@ import domb.app.model.enums.PartEnum;
 
 
 rule "SquelingNoise -> DriveBelt"
+  no-loop 
   when
     $failure: Failure(questionId == 1  && answerValue == "The engine") 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Engine");
-    $failure.setPart(PartEnum.DRIVE_BELT);
+    modify($failure){
+      setPart(PartEnum.DRIVE_BELT);
+    }
 
+end
+
+
+rule "SquelingNoise -> DRIVE_BELT -> Continuing failure"
+  no-loop 
+  when
+    $failure: Failure(part == PartEnum.DRIVE_BELT, $releatedFailures: releatedFailures)
+    $count: Number(intValue >= 4) from accumulate(
+      Failure(
+        $t: this,
+        part == PartEnum.DRIVE_BELT
+      ) from $releatedFailures,
+      count($t)
+    ) 
+  then
+    System.out.println("RULE EXECUTED: MAJOR DRIVE_BELT FAILURE");
+    // modify($failure){
+    //   // mozda lista za status/part ako se zaredom izvrse
+    //   // dodati polje validity ili nesto slicno, za proveru da li je vec iskoriscen problem
+    //   // mozda dodati severety na failure
+    //   // odraditi reakciju na major drive belt
+    //   // gde bi se invalidirali relevantni problemi
+    //   setPart(PartEnum.MAJOR_DRIVE_BELT);
+    // }
 end
 
 
