@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { BrowserRouter } from 'react-router-dom';
+import { colors, config } from './theme.js';
+import Router from './components/Router.jsx';
+import Layout from './components/layout/index.jsx';
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const theme = extendTheme({ colors, config });
+const queryClient = new QueryClient(
+  {
+    defaultOptions: {
+      queries: {
+        retry: true,
+      }
+    }
+  }
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <ChakraProvider theme={theme}>
+          <BrowserRouter>
+            <Layout>
+              <QueryClientProvider client={queryClient}>
+                <Router />
+              </QueryClientProvider>
+            </Layout>
+          </BrowserRouter>
+        </ChakraProvider>
+
   );
 }
 

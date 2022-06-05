@@ -1,25 +1,31 @@
 package domb.app.model;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @MappedSuperclass
 @Where(clause = "active = true")
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
     @Id
-    @GeneratedValue(generator = "long")
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
     
     @Column(columnDefinition = "boolean default true", nullable = false)
-    private boolean active;
+    private boolean active = true;
     
-    @Column
-    private long createdAt;
+    @Column(name = "created_at", updatable = false)
+    @CreatedDate
+    private Long createdAt;
 
     public long getId() {
         return id;
@@ -37,11 +43,11 @@ public class BaseEntity {
         this.active = active;
     }
 
-    public long getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 }

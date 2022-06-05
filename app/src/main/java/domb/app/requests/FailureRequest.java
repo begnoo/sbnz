@@ -8,8 +8,6 @@ public class FailureRequest {
     private String vehicleModel;
     private String vehicleYear;
 
-
-
     public long getQuestionId() {
         return this.questionId;
     }

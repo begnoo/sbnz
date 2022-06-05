@@ -21,7 +21,8 @@ INSERT INTO question_answers (question_id, answers_id) VALUES (2, 3), (2, 4);
 -- sounds like menu
 -- 
 INSERT INTO question (id, question) VALUES (4, 'What do you hear?');
-INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (9, 'Squealing', 1);
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (8, 'Squealing', 1);
+INSERT INTO question_answers (question_id, answers_id) VALUES (4, 8);
 
 -- 
 -- main menu
@@ -33,5 +34,13 @@ INSERT INTO answer (id, answer_text) VALUES (7, 'Smells like');
 
 INSERT INTO question_answers (question_id, answers_id) VALUES (3, 5), (3, 6), (3, 7);
 
--- answer count = 9
+-- answer count = 8
 -- auestion count = 4
+
+-- 
+-- Insturctions
+-- 
+INSERT INTO instructions (id, part, instructions) VALUES (1, 'DRIVE_BELT', 'Ma nzm brate 1');
+INSERT INTO instructions (id, part, instructions) VALUES (2, 'BREAK_PADS', 'Ma nzm brate 2');
+INSERT INTO instructions (id, part, instructions) VALUES (3, 'NONE', 'You are overreacting');
+

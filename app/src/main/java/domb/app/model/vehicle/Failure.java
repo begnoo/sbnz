@@ -25,7 +25,7 @@ public class Failure extends BaseEntity {
     private String vehicleModel;
 
     @Column
-    private long vehicleYear;
+    private String vehicleYear;
 
     @Transient
     private long questionId;
@@ -78,11 +78,11 @@ public class Failure extends BaseEntity {
         this.vehicleModel = vehicleModel;
     }
 
-    public long getVehicleYear() {
+    public String getVehicleYear() {
         return this.vehicleYear;
     }
 
-    public void setVehicleYear(long vehicleYear) {
+    public void setVehicleYear(String vehicleYear) {
         this.vehicleYear = vehicleYear;
     }
 
