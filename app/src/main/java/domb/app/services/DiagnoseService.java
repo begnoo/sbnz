@@ -43,6 +43,7 @@ public class DiagnoseService {
         if (failure.getPart() != PartEnum.NONE) {
             failureRepository.save(failure);
         }
+        System.out.println(failure.getPart());
         Instructions instr = instructionRepository.findByPart(failure.getPart()).orNull();
         return instr != null ? instr : new Instructions("Not sure yet.", PartEnum.UNKNOWN);
     }

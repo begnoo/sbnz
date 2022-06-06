@@ -76,3 +76,33 @@ rule "SquelingNoise -> None"
     }
 
 end
+
+rule "P0300 -> No rough drive"
+when
+  $failure: Failure(questionId == 6 && answerValue == "No")
+then
+  System.out.println("RULE EXECUTED: P0300 everything normal")
+  modify($failure) {
+    setPart(PartEnum.RESET_OBD);
+  }
+end
+
+rule "P0300 -> rough drive -> not working spark plugs"
+when
+  $failure: Failure(questionId == 7 && answerValue == "No")
+then
+  System.out.println("RULE EXECUTED: P0300 faulty spark plugs")
+  modify($failure) {
+    setPart(PartEnum.SPARK_PLUGS);
+  }
+end
+
+rule "P0300 -> rough drive -> working spark plugs"
+when
+  $failure: Failure(questionId == 7 && answerValue == "Yes")
+then
+  System.out.println("RULE EXECUTED: P0300 see mechanic")
+  modify($failure) {
+    setPart(PartEnum.UNKNOWN)
+  }
+end
