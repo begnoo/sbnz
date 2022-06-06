@@ -31,12 +31,9 @@ public class DiagnoseService {
 
     public Instructions diagnoseBasedOnUserData(Failure failure) {
 
-        System.out.println(failure.getId());
         List<Failure> releatedFailures = failureRepository.findByVehicleManufacturerAndVehicleModel(failure.getVehicleManufacturer(), failure.getVehicleModel())
                                         .orElse(new ArrayList<Failure>());
         failure.setReleatedFailures(releatedFailures);
-
-        System.out.println(failure.getReleatedFailures().size());
 
         KieSession kieSession = kieContainer.newKieSession();
         kieSession.insert(failure);
@@ -46,8 +43,8 @@ public class DiagnoseService {
         if (failure.getPart() != PartEnum.NONE) {
             failureRepository.save(failure);
         }
-
-        return instructionRepository.findByPart(failure.getPart()).orNull();
+        Instructions instr = instructionRepository.findByPart(failure.getPart()).orNull();
+        return instr != null ? instr : new Instructions("Not sure yet.", PartEnum.UNKNOWN);
     }
 
 }

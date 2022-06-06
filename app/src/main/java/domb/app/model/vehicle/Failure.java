@@ -29,6 +29,9 @@ public class Failure extends BaseEntity {
     @Column
     private String vehicleYear;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean used;
+
     @Transient
     private List<Failure> releatedFailures;
 
@@ -98,5 +101,17 @@ public class Failure extends BaseEntity {
     public void setReleatedFailures(List<Failure> releatedFailures) {
         this.releatedFailures = releatedFailures;
     }    
+
+    public boolean isUsed() {
+        return this.used;
+    }
+
+    public boolean getUsed() {
+        return this.used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
 
 }

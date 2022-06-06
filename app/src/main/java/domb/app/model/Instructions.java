@@ -23,6 +23,15 @@ public class Instructions extends BaseEntity {
     private PartEnum part;
     // private CauseEnum cause;
 
+
+    public Instructions() {
+    }
+
+    public Instructions(String instructions, PartEnum part) {
+        this.instructions = instructions;
+        this.part = part;
+    }
+
     public String getInstructions() {
         return this.instructions;
     }

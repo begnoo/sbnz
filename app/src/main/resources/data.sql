@@ -43,4 +43,6 @@ INSERT INTO question_answers (question_id, answers_id) VALUES (3, 5), (3, 6), (3
 INSERT INTO instructions (id, part, instructions) VALUES (1, 'DRIVE_BELT', 'Ma nzm brate 1');
 INSERT INTO instructions (id, part, instructions) VALUES (2, 'BREAK_PADS', 'Ma nzm brate 2');
 INSERT INTO instructions (id, part, instructions) VALUES (3, 'NONE', 'You are overreacting');
+INSERT INTO instructions (id, part, instructions) VALUES (4, 'MAJOR_DRIVE_BELT', 'Ma nzm brate ovo je vec ozbiljno');
+
 

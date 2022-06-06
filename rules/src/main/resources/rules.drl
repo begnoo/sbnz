@@ -6,11 +6,12 @@ import domb.app.model.enums.PartEnum;
 
 
 rule "SquelingNoise -> DriveBelt"
-  no-loop 
+  lock-on-active true
+  no-loop true
   when
     $failure: Failure(questionId == 1  && answerValue == "The engine") 
   then
-    System.out.println("RULE EXECUTED: SquelingNoise The Engine");
+    System.out.println("RULE EXECUTED: DRIVE_BELT");
     modify($failure){
       setPart(PartEnum.DRIVE_BELT);
     }
@@ -19,43 +20,59 @@ end
 
 
 rule "SquelingNoise -> DRIVE_BELT -> Continuing failure"
-  no-loop 
+  no-loop true
   when
     $failure: Failure(part == PartEnum.DRIVE_BELT, $releatedFailures: releatedFailures)
-    $count: Number(intValue >= 4) from accumulate(
-      Failure(
+    $count: Number(intValue > 4) from accumulate(
+      $f: Failure(
         $t: this,
-        part == PartEnum.DRIVE_BELT
+        part == PartEnum.DRIVE_BELT,
+        used == false
       ) from $releatedFailures,
       count($t)
     ) 
   then
     System.out.println("RULE EXECUTED: MAJOR DRIVE_BELT FAILURE");
-    // modify($failure){
-    //   // mozda lista za status/part ako se zaredom izvrse
-    //   // dodati polje validity ili nesto slicno, za proveru da li je vec iskoriscen problem
-    //   // mozda dodati severety na failure
-    //   // odraditi reakciju na major drive belt
-    //   // gde bi se invalidirali relevantni problemi
-    //   setPart(PartEnum.MAJOR_DRIVE_BELT);
-    // }
+    modify($failure){
+      // mozda dodati severety na failure
+      setPart(PartEnum.MAJOR_DRIVE_BELT);
+    }
+end
+
+rule "SquelingNoise -> DRIVE_BELT -> Continuing failure -> update used failures"
+  no-loop true
+  when
+    $failure: Failure(part == PartEnum.MAJOR_DRIVE_BELT, $releatedFailures: releatedFailures)
+  then
+    System.out.println("RULE EXECUTED: UPDATE PREVIOUS DRIVE_BELTS");
+    for (int i = 0; i < $failure.getReleatedFailures().size(); i++) {
+      $failure.getReleatedFailures().get(i).setUsed(true);
+    }
 end
 
 
 rule "SquelingNoise -> BreakPads"
+  lock-on-active true
+  no-loop true
   when
     $failure: Failure(questionId == 2  && answerValue == "Yes") 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes");
-    $failure.setPart(PartEnum.BREAK_PADS);
+    modify($failure){
+      setPart(PartEnum.BREAK_PADS);
+    }
 
 end
 
 rule "SquelingNoise -> None"
+  lock-on-active true
+  no-loop true
   when
     $failure: Failure(questionId == 2  && answerValue=="No") 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes Normal");
-    $failure.setPart(PartEnum.NONE);
+    modify($failure){
+      setPart(PartEnum.NONE);
+    }
 
 end
