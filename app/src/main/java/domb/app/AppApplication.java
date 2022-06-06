@@ -1,9 +1,16 @@
 package domb.app;
 
+import org.drools.core.ClockType;
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.builder.ReleaseId;
+import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.KieSessionConfiguration;
+import org.kie.api.runtime.conf.ClockTypeOption;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,14 +26,19 @@ public class AppApplication {
 	}
 
 	@Bean
-	public KieContainer kieContainer() {
+	public KieSession kieSession() {
 		KieServices ks = KieServices.Factory.get();
 		ReleaseId releaseId = ks.newReleaseId("domb","rules", "0.0.1-SNAPSHOT");
 		KieContainer kContainer = ks.newKieContainer(releaseId);
-		KieScanner kScanner = ks.newKieScanner(kContainer);
-		kScanner.start(10_000);
+		
+		KieBaseConfiguration kieBaseConfiguration = ks.newKieBaseConfiguration();
+		kieBaseConfiguration.setOption(EventProcessingOption.STREAM);
+		KieBase kieBase = kContainer.newKieBase(kieBaseConfiguration);
 
-		return kContainer;
+		KieSessionConfiguration kieSessionConfiguration = ks.newKieSessionConfiguration();
+		kieSessionConfiguration.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+
+		return kieBase.newKieSession(kieSessionConfiguration, null);
 	}
 	
 	@Bean

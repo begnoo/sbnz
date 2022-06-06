@@ -4,24 +4,13 @@ import domb.app.model.vehicle.Failure;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import org.kie.api.definition.type.Role;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-@Entity
-@DiscriminatorValue("REPEATING")
-@SQLDelete(sql = "UPDATE events SET active = false WHERE id = ?")
-@Where(clause = "active = true")
-public class RepeatingFailureEvent extends Event {
+@Role(Role.Type.EVENT)
+public class EssentialFixEvent extends Event {
     
-    @Column
     private String type;
     
-    @OneToMany
     private List<Failure> relatedFailures;
 
     public String getType() {
