@@ -8,7 +8,7 @@ import InstructionsInfo from "../components/InstructionsInfo";
 
 export default function DiagnosePage() {
 
-    const [questionId, setQuestionId] = useState(3);
+    const [questionId, setQuestionId] = useState(5);
     const [failureRequest, setFailureRequest] = useState(
         {
             vehicleManufacturer: "DEFAULT",

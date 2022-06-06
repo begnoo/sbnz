@@ -35,7 +35,7 @@ INSERT INTO answer (id, answer_text) VALUES (7, 'Smells like');
 INSERT INTO question_answers (question_id, answers_id) VALUES (3, 5), (3, 6), (3, 7);
 
 -- answer count = 8
--- auestion count = 4
+-- auestion count = 10
 
 -- 
 -- Insturctions
@@ -44,5 +44,23 @@ INSERT INTO instructions (id, part, instructions) VALUES (1, 'DRIVE_BELT', 'Ma n
 INSERT INTO instructions (id, part, instructions) VALUES (2, 'BREAK_PADS', 'Ma nzm brate 2');
 INSERT INTO instructions (id, part, instructions) VALUES (3, 'NONE', 'You are overreacting');
 INSERT INTO instructions (id, part, instructions) VALUES (4, 'MAJOR_DRIVE_BELT', 'Ma nzm brate ovo je vec ozbiljno');
+
+--
+-- obd
+-- 
+INSERT INTO question (id, question) VALUES (5, 'What is your OBD fault code?');
+INSERT INTO question (id, question) VALUES (6, 'Does your car ride roughly?');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (9, 'P0300', 6);
+
+INSERT INTO question (id, question) VALUES (7, 'Do your spark plugs work?');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (10, 'Yes', 7);
+
+INSERT INTO answer (id, answer_text) VALUES (11, 'Yes'), (12, 'No'), (13, 'No');
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (5, 9), (6, 10), (6, 13), (7, 11), (7, 12);
+
+INSERT INTO instructions (id, part, instructions) VALUES (5, 'SPARK_PLUGS', 'Change your spark plugs.');
+INSERT INTO instructions (id, part, instructions) VALUES (6, 'RESET_OBD', 'OBD connector made an error. Restart it.');
+
 
 
