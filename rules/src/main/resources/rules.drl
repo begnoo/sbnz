@@ -143,7 +143,7 @@ then
   }
 end
 
-rule "P0440 -> faulty vapor sensor"
+rule "P0440 -> faulty vapor sensor -> UNKNOW"
   no-loop true
 when 
   $failure: Failure(questionId == 9 && answerValue == "No")
