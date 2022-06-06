@@ -109,3 +109,48 @@ then
     setPart(PartEnum.UNKNOWN);
   }
 end
+
+rule "P0440 -> leakeage under vechicle"
+  no-loop true
+when 
+  $failure: Failure(questionId == 8 && answerValue == "Yes")
+then 
+  System.out.println("RULE EXECUTED: faulty gas tank");
+  modify($failure) {
+    setPart(PartEnum.FUEL_TANK);
+  }
+end
+
+rule "P0440 -> no leakeage under vechicle"
+  no-loop true
+when 
+  $failure: Failure(questionId == 8 && answerValue == "No")
+then 
+  System.out.println("RULE EXECUTED: reset obd");
+  modify($failure) {
+    setPart(PartEnum.RESET_OBD);
+  }
+end
+
+rule "P0440 -> faulty vapor sensor"
+  no-loop true
+when 
+  $failure: Failure(questionId == 9 && answerValue == "Yes")
+then 
+  System.out.println("RULE EXECUTED: faulty vapor sensor");
+  modify($failure) {
+    setPart(PartEnum.VAPOR_SENSOR);
+  }
+end
+
+rule "P0440 -> faulty vapor sensor"
+  no-loop true
+when 
+  $failure: Failure(questionId == 9 && answerValue == "No")
+then 
+  System.out.println("RULE EXECUTED: see mechanic");
+  modify($failure) {
+    setPart(PartEnum.UNKNOWN);
+  }
+end
+
