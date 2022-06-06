@@ -154,3 +154,68 @@ then
   }
 end
 
+rule "P0420 -> catalyzer"
+  no-loop true
+when 
+  $failure: Failure(questionId == 10 && answerValue == "Yes")
+then
+  System.out.println("RULE EXECUTED: catalyzer faulty");
+  modify($failure) {
+    setPart(PartEnum.CATALYZER);
+  }
+end
+
+rule "P0420 -> vechicle starts"
+  no-loop true
+when 
+  $failure: Failure(questionId == 11 && answerValue == "Yes")
+then
+  System.out.println("RULE EXECUTED: reset OBD");
+  modify($failure) {
+    setPart(PartEnum.RESET_OBD);
+  }
+end
+
+rule "P0420 -> faulty pump"
+  no-loop true
+when 
+  $failure: Failure(questionId == 11 && answerValue == "No")
+then
+  System.out.println("RULE EXECUTED: faulty fuel pump");
+  modify($failure) {
+    setPart(PartEnum.FUEL_PUMP);
+  }
+end
+
+rule "P0171 -> pcv valve leaks"
+  no-loop true
+when 
+  $failure: Failure(questionId == 12 && answerValue == "Yes")
+then
+  System.out.println("RULE EXECUTED: faulty pcv valve");
+  modify($failure) {
+    setPart(PartEnum.PCV_LEAK);
+  }
+end
+
+rule "P0171 -> maf faulty"
+  no-loop true
+when 
+  $failure: Failure(questionId == 13 && answerValue == "Yes")
+then
+  System.out.println("RULE EXECUTED: faulty maf sensor");
+  modify($failure) {
+    setPart(PartEnum.MAF);
+  }
+end
+
+rule "P0171 -> pcv valve leaks"
+  no-loop true
+when 
+  $failure: Failure(questionId == 13 && answerValue == "No")
+then
+  System.out.println("RULE EXECUTED: reset obd");
+  modify($failure) {
+    setPart(PartEnum.RESET_OBD);
+  }
+end
