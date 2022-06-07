@@ -4,15 +4,22 @@ import java.util.Set;
 
 import function domb.rules.DroolsUtils.debugLhsValue;
 import domb.app.model.vehicle.Failure;
+import domb.app.model.vehicle.SensorValue;
 import domb.app.model.enums.PartEnum;
+import domb.app.model.enums.ExtremeType;
+
 
 import domb.app.model.events.PartWarningEvent;
+import domb.app.model.events.ExtremeAverageWarningEvent;
+
 
 rule "ENGINE WARNING"
   no-loop true
   when
-    $newFailure: Failure(part == PartEnum.MAJOR_DRIVE_BELT || part == PartEnum.MAJOR_ENGINE_LUBRICATION) and
-    
+    $newFailure: Failure(part == PartEnum.MAJOR_DRIVE_BELT || part == PartEnum.MAJOR_ENGINE_LUBRICATION) over window:length(1)
+     
+    and
+
     $previouesBeltFailures: Set() from accumulate(
         $previouesFailure: Failure(
             this != $newFailure,
@@ -21,7 +28,9 @@ rule "ENGINE WARNING"
             vehicleModel == $newFailure.vehicleModel,
             this before[1s, 30d] $newFailure 
         ), collectSet($previouesFailure)
-    ) and
+    ) 
+    
+    and
     
     $previouesLubractionFailures: Set() from accumulate(
         $previouesLubricationFailure: Failure(
@@ -31,7 +40,9 @@ rule "ENGINE WARNING"
             vehicleModel == $newFailure.vehicleModel,
             this before[1s, 30d] $newFailure 
         ), collectSet($previouesLubricationFailure)
-    ) and
+    ) 
+    
+    and
 
     eval($previouesBeltFailures.size() > 0 && $previouesLubractionFailures.size() > 0)
   then
@@ -39,3 +50,53 @@ rule "ENGINE WARNING"
     insert(new PartWarningEvent(PartEnum.ENGINE_WARNING));
 
 end
+
+rule "EXTREME VALUE WARNING"
+no-loop true
+  when
+    $newSensorValue: SensorValue() over window:length(1)
+    
+    and
+    
+    $sensorValues: Set() from accumulate(
+      $sensorValue: SensorValue(
+        sensorType == $newSensorValue.sensorType 
+      ), collectSet($sensorValue)
+    )
+    
+    and
+    
+    eval($sensorValues.size() > 3)
+    
+    and
+
+    $average: Number() from accumulate(
+        $sensorValue: SensorValue() from $sensorValues,
+        average( $sensorValue.getReading() )
+    ) 
+    
+    and 
+    
+    eval($average.doubleValue() >= 220 || $average.doubleValue() < 100)
+  then
+    System.out.println("RULE EXECUTED: DETECTED EXTREME WARNING");
+    boolean over = $average.doubleValue() >= 220;
+    insert(new ExtremeAverageWarningEvent(over ? $average.doubleValue() - 220 : 100 - $average.doubleValue(), over ? ExtremeType.OVER : ExtremeType.UNDER));
+    System.out.println("OVER LIMIT: " + $average.doubleValue() - 220);
+
+end
+
+// rule "EXTREME VALUE WARNING"
+// no-loop true
+//   when
+//     $extremeAverageWarningEvent: ExtremeAverageWarningEvent()
+//     $partWarningEvent: PartWarningEvent()
+ 
+//     and
+    
+//   then
+//     System.out.println("RULE EXECUTED: DETECTED EXTREME WARNING");
+//     boolean over = $average.doubleValue() >= 220;
+//     insert(new EssentialFixEvent());
+
+// end

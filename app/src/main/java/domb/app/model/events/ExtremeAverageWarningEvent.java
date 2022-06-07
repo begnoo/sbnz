@@ -10,6 +10,15 @@ public class ExtremeAverageWarningEvent extends Event {
     private double offsetFromAverage;
     private ExtremeType type;
 
+
+    public ExtremeAverageWarningEvent() {
+    }
+
+    public ExtremeAverageWarningEvent(double offsetFromAverage, ExtremeType type) {
+        this.offsetFromAverage = offsetFromAverage;
+        this.type = type;
+    }
+
     public double getOffsetFromAverage() {
         return offsetFromAverage;
     }
@@ -17,4 +26,13 @@ public class ExtremeAverageWarningEvent extends Event {
     public void setOffsetFromAverage(double offsetFromAverage) {
         this.offsetFromAverage = offsetFromAverage;
     }
+
+    public ExtremeType getType() {
+        return this.type;
+    }
+
+    public void setType(ExtremeType type) {
+        this.type = type;
+    }
+
 }

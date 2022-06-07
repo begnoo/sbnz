@@ -19,7 +19,6 @@ public class DiagnoseService {
     private final FailureRepository failureRepository;
     private final InstructionsRepository instructionRepository;
 
-
     @Autowired
     public DiagnoseService(KieSession kieSession, FailureRepository failureRepository, InstructionsRepository instructionsRepository) {
         super();
