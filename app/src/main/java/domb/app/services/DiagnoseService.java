@@ -43,7 +43,7 @@ public class DiagnoseService {
         }
         
         Instructions instr = instructionRepository.findByPart(failure.getPart()).orNull();
-        return instr != null ? instr : new Instructions("Not sure yet.", PartEnum.UNKNOWN);
+        return instr != null ? instr : new Instructions("The system could not detect your car malfunction. Visit your mechanic.", PartEnum.UNKNOWN);
     }
 
 }
