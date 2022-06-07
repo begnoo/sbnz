@@ -11,6 +11,8 @@ import domb.app.model.enums.ExtremeType;
 
 import domb.app.model.events.PartWarningEvent;
 import domb.app.model.events.ExtremeAverageWarningEvent;
+import domb.app.model.events.EssentialFixEvent;
+
 
 
 rule "ENGINE WARNING"
@@ -54,13 +56,13 @@ end
 rule "EXTREME VALUE WARNING"
 no-loop true
   when
-    $newSensorValue: SensorValue() over window:length(1)
+    $newSensorValue: SensorValue( $sensorType : sensorType ) over window:length(1)
     
     and
     
     $sensorValues: Set() from accumulate(
       $sensorValue: SensorValue(
-        sensorType == $newSensorValue.sensorType 
+        sensorType == $sensorType 
       ), collectSet($sensorValue)
     )
     
@@ -79,23 +81,23 @@ no-loop true
     
     eval($average.doubleValue() >= 220 || $average.doubleValue() < 100)
   then
+    // uvescemo mape
+    // za ovo ce biti napisana simulacija
     System.out.println("RULE EXECUTED: DETECTED EXTREME WARNING");
     boolean over = $average.doubleValue() >= 220;
-    insert(new ExtremeAverageWarningEvent(over ? $average.doubleValue() - 220 : 100 - $average.doubleValue(), over ? ExtremeType.OVER : ExtremeType.UNDER));
+    insert(new ExtremeAverageWarningEvent(over ? $average.doubleValue() - 220 : 100 - $average.doubleValue(), over ? ExtremeType.OVER : ExtremeType.UNDER, $sensorType));
 
 end
 
-// rule "EXTREME VALUE WARNING"
-// no-loop true
-//   when
-//     $extremeAverageWarningEvent: ExtremeAverageWarningEvent()
-//     $partWarningEvent: PartWarningEvent()
+rule "ESSENTIAL FIX"
+no-loop true
+  when
+    $extremeAverageWarningEvent: ExtremeAverageWarningEvent( sensorType == "TEMPERATURE") and
+    $partWarningEvent: PartWarningEvent( part == PartEnum.ENGINE_WARNING, this before[1s, 30d] $extremeAverageWarningEvent)
  
-//     and
-    
-//   then
-//     System.out.println("RULE EXECUTED: DETECTED EXTREME WARNING");
-//     boolean over = $average.doubleValue() >= 220;
-//     insert(new EssentialFixEvent());
+  then
+    System.out.println("RULE EXECUTED: ESSENTIAL FIX ENGINE");
+    //zabrana korisniku da dijagnozira kola preko korisnickog unosa, i upozorenje da hitno ide kod mehanicara
+    insert(new EssentialFixEvent(PartEnum.ESSENTIAL_FIX_ENGINE));
 
-// end
+end

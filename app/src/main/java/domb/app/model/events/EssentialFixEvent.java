@@ -1,31 +1,29 @@
 package domb.app.model.events;
 
-import domb.app.model.vehicle.Failure;
-
-import java.util.List;
-
 import org.kie.api.definition.type.Role;
+
+import domb.app.model.enums.PartEnum;
 
 @Role(Role.Type.EVENT)
 public class EssentialFixEvent extends Event {
     
-    private String type;
+    private PartEnum part;
+
+
+    public EssentialFixEvent() {
+    }
+
+
+    public EssentialFixEvent(PartEnum part) {
+        this.part = part;
+    }
+
+    public PartEnum getPart() {
+        return this.part;
+    }
+
+    public void setPart(PartEnum part) {
+        this.part = part;
+    }
     
-    private List<Failure> relatedFailures;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public List<Failure> getRelatedFailures() {
-        return relatedFailures;
-    }
-
-    public void setRelatedFailures(List<Failure> relatedFailures) {
-        this.relatedFailures = relatedFailures;
-    }
 }

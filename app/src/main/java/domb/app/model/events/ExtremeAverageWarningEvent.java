@@ -8,16 +8,20 @@ import domb.app.model.enums.ExtremeType;
 public class ExtremeAverageWarningEvent extends Event {
     
     private double offsetFromAverage;
-    private ExtremeType type;
+    private ExtremeType extremeType;
+    private String sensorType;
 
 
     public ExtremeAverageWarningEvent() {
     }
 
-    public ExtremeAverageWarningEvent(double offsetFromAverage, ExtremeType type) {
+
+    public ExtremeAverageWarningEvent(double offsetFromAverage, ExtremeType extremeType, String sensorType) {
         this.offsetFromAverage = offsetFromAverage;
-        this.type = type;
+        this.extremeType = extremeType;
+        this.sensorType = sensorType;
     }
+    
 
     public double getOffsetFromAverage() {
         return offsetFromAverage;
@@ -27,12 +31,21 @@ public class ExtremeAverageWarningEvent extends Event {
         this.offsetFromAverage = offsetFromAverage;
     }
 
-    public ExtremeType getType() {
-        return this.type;
+    public ExtremeType getExtremeType() {
+        return this.extremeType;
     }
 
-    public void setType(ExtremeType type) {
-        this.type = type;
+    public void setExtremeType(ExtremeType extremeType) {
+        this.extremeType = extremeType;
     }
+
+    public String getSensorType() {
+        return this.sensorType;
+    }
+
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
+
 
 }
