@@ -9,7 +9,7 @@ rule "SquelingNoise -> DriveBelt"
   lock-on-active true
   no-loop true
   when
-    $failure: Failure(questionId == 1  && answerValue == "The engine") 
+    $failure: Failure(questionId == 1  && answerValue == "The engine" && !used) 
   then
     System.out.println("RULE EXECUTED: DRIVE_BELT");
     modify($failure){
@@ -23,7 +23,7 @@ rule "SquelingNoise -> DRIVE_BELT -> Continuing failure"
   no-loop true
   when
     $failure: Failure(part == PartEnum.DRIVE_BELT, $releatedFailures: releatedFailures)
-    $count: Number(intValue > 4) from accumulate(
+    $count: Number(intValue > 2) from accumulate(
       $f: Failure(
         $t: this,
         part == PartEnum.DRIVE_BELT,
@@ -55,7 +55,7 @@ rule "SquelingNoise -> BreakPads"
   lock-on-active true
   no-loop true
   when
-    $failure: Failure(questionId == 2  && answerValue == "Yes") 
+    $failure: Failure(questionId == 2  && answerValue == "Yes" && !used) 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes");
     modify($failure){
@@ -68,11 +68,80 @@ rule "SquelingNoise -> None"
   lock-on-active true
   no-loop true
   when
-    $failure: Failure(questionId == 2  && answerValue=="No") 
+    $failure: Failure(questionId == 2  && answerValue=="No" && !used) 
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes Normal");
     modify($failure){
       setPart(PartEnum.NONE);
+    }
+end
+
+rule "TappingSound -> Oil Light -> Yes -> ENGINE_LUBRICATION"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 14  && answerValue=="Yes" && !used) 
+  then
+    System.out.println("RULE EXECUTED: TappingSound ENGINE_LUBRICATION");
+    modify($failure){
+      setPart(PartEnum.ENGINE_LUBRICATION);
+    }
+
+end
+
+rule "TappingSound -> ENGINE_LUBRICATION -> Continuing failure"
+  no-loop true
+  when
+    $failure: Failure(part == PartEnum.ENGINE_LUBRICATION, $releatedFailures: releatedFailures)
+    $count: Number(intValue > 2) from accumulate(
+      $f: Failure(
+        $t: this,
+        part == PartEnum.ENGINE_LUBRICATION,
+        used == false
+      ) from $releatedFailures,
+      count($t)
+    ) 
+  then
+    System.out.println("RULE EXECUTED: MAJOR_ENGINE_LUBRICATION FAILURE");
+    modify($failure){
+      // mozda dodati severety na failure
+      setPart(PartEnum.MAJOR_ENGINE_LUBRICATION);
+    }
+end
+
+rule "TappingSound -> ENGINE_LUBRICATION -> Continuing failure -> update used failures"
+  no-loop true
+  when
+    $failure: Failure(part == PartEnum.MAJOR_ENGINE_LUBRICATION, $releatedFailures: releatedFailures)
+  then
+    System.out.println("RULE EXECUTED: UPDATE PREVIOUS ENGINE_LUBRICATION");
+    for (int i = 0; i < $failure.getReleatedFailures().size(); i++) {
+      $failure.getReleatedFailures().get(i).setUsed(true);
+    }
+end
+
+rule "TappingSound -> Oil Light -> Low Oil Level -> Yes"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 15  && answerValue=="Yes" && !used) 
+  then
+    System.out.println("RULE EXECUTED: TappingSound ADD_OIL");
+    modify($failure){
+      setPart(PartEnum.ADD_OIL);
+    }
+
+end
+
+rule "TappingSound -> Oil Light -> Low Oil Level -> No"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 15  && answerValue=="No" && !used) 
+  then
+    System.out.println("RULE EXECUTED: TappingSound LOOSE_VALVE");
+    modify($failure){
+      setPart(PartEnum.LOOSE_VALVE);
     }
 
 end
@@ -80,7 +149,7 @@ end
 rule "P0300 -> No rough drive"
   no-loop true
 when
-  $failure: Failure(questionId == 6 && answerValue == "No")
+  $failure: Failure(questionId == 6 && answerValue == "No" && !used)
 then
   System.out.println("RULE EXECUTED: P0300 everything normal");
   modify($failure) {
@@ -91,7 +160,7 @@ end
 rule "P0300 -> rough drive -> not working spark plugs"
   no-loop true
 when
-  $failure: Failure(questionId == 7 && answerValue == "No")
+  $failure: Failure(questionId == 7 && answerValue == "No" && !used)
 then
   System.out.println("RULE EXECUTED: P0300 faulty spark plugs");
   modify($failure) {
@@ -102,7 +171,7 @@ end
 rule "P0300 -> rough drive -> working spark plugs"
   no-loop true
 when
-  $failure: Failure(questionId == 7 && answerValue == "Yes")
+  $failure: Failure(questionId == 7 && answerValue == "Yes" && !used)
 then
   System.out.println("RULE EXECUTED: P0300 see mechanic");
   modify($failure) {
@@ -113,7 +182,7 @@ end
 rule "P0440 -> leakeage under vechicle"
   no-loop true
 when 
-  $failure: Failure(questionId == 8 && answerValue == "Yes")
+  $failure: Failure(questionId == 8 && answerValue == "Yes" && !used)
 then 
   System.out.println("RULE EXECUTED: faulty gas tank");
   modify($failure) {
@@ -124,7 +193,7 @@ end
 rule "P0440 -> no leakeage under vechicle"
   no-loop true
 when 
-  $failure: Failure(questionId == 8 && answerValue == "No")
+  $failure: Failure(questionId == 8 && answerValue == "No" && !used)
 then 
   System.out.println("RULE EXECUTED: reset obd");
   modify($failure) {
@@ -135,7 +204,7 @@ end
 rule "P0440 -> faulty vapor sensor"
   no-loop true
 when 
-  $failure: Failure(questionId == 9 && answerValue == "Yes")
+  $failure: Failure(questionId == 9 && answerValue == "Yes" && !used)
 then 
   System.out.println("RULE EXECUTED: faulty vapor sensor");
   modify($failure) {
@@ -146,7 +215,7 @@ end
 rule "P0440 -> faulty vapor sensor -> UNKNOW"
   no-loop true
 when 
-  $failure: Failure(questionId == 9 && answerValue == "No")
+  $failure: Failure(questionId == 9 && answerValue == "No" && !used)
 then 
   System.out.println("RULE EXECUTED: see mechanic");
   modify($failure) {
@@ -157,7 +226,7 @@ end
 rule "P0420 -> catalyzer"
   no-loop true
 when 
-  $failure: Failure(questionId == 10 && answerValue == "Yes")
+  $failure: Failure(questionId == 10 && answerValue == "Yes" && !used)
 then
   System.out.println("RULE EXECUTED: catalyzer faulty");
   modify($failure) {
@@ -168,7 +237,7 @@ end
 rule "P0420 -> vechicle starts"
   no-loop true
 when 
-  $failure: Failure(questionId == 11 && answerValue == "Yes")
+  $failure: Failure(questionId == 11 && answerValue == "Yes" && !used)
 then
   System.out.println("RULE EXECUTED: reset OBD");
   modify($failure) {
@@ -179,7 +248,7 @@ end
 rule "P0420 -> faulty pump"
   no-loop true
 when 
-  $failure: Failure(questionId == 11 && answerValue == "No")
+  $failure: Failure(questionId == 11 && answerValue == "No" && !used)
 then
   System.out.println("RULE EXECUTED: faulty fuel pump");
   modify($failure) {
@@ -187,10 +256,10 @@ then
   }
 end
 
-rule "P0171 -> pcv valve leaks"
+rule "P0171 -> pcv valve leaks -> PCV_LEAK"
   no-loop true
 when 
-  $failure: Failure(questionId == 12 && answerValue == "Yes")
+  $failure: Failure(questionId == 12 && answerValue == "Yes" && !used)
 then
   System.out.println("RULE EXECUTED: faulty pcv valve");
   modify($failure) {
@@ -201,7 +270,7 @@ end
 rule "P0171 -> maf faulty"
   no-loop true
 when 
-  $failure: Failure(questionId == 13 && answerValue == "Yes")
+  $failure: Failure(questionId == 13 && answerValue == "Yes" && !used)
 then
   System.out.println("RULE EXECUTED: faulty maf sensor");
   modify($failure) {
@@ -209,10 +278,10 @@ then
   }
 end
 
-rule "P0171 -> pcv valve leaks"
+rule "P0171 -> pcv valve leaks -> RESET_OBD"
   no-loop true
 when 
-  $failure: Failure(questionId == 13 && answerValue == "No")
+  $failure: Failure(questionId == 13 && answerValue == "No" && !used)
 then
   System.out.println("RULE EXECUTED: reset obd");
   modify($failure) {

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { HOME_PAGE} from "../routes";
+import { HOME_PAGE, OBD_PAGE} from "../routes";
 import DiagnosePage from "../pages/DiagnosePage";
 
 export default function Router() {

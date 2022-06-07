@@ -36,13 +36,12 @@ public class DiagnoseService {
 
         kieSession.insert(failure);
         kieSession.fireAllRules();
+        System.out.println("Fact Count: " + kieSession.getFactCount());
         // kieSession.dispose();
 
         if (failure.getPart() != PartEnum.NONE) {
             failureRepository.save(failure);
         }
-
-        System.out.println(failure.getPart());
         
         Instructions instr = instructionRepository.findByPart(failure.getPart()).orNull();
         return instr != null ? instr : new Instructions("Not sure yet.", PartEnum.UNKNOWN);

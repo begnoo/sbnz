@@ -8,6 +8,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.kie.api.definition.type.Role;
 
 import domb.app.model.BaseEntity;
 import domb.app.model.enums.PartEnum;
@@ -15,6 +16,7 @@ import domb.app.model.enums.PartEnum;
 @Entity
 @SQLDelete(sql = "UPDATE failure SET active = false WHERE id = ?")
 @Where(clause = "active = true")
+@Role(Role.Type.EVENT)
 public class Failure extends BaseEntity {
 
     @Column

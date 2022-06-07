@@ -17,12 +17,28 @@ INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (2, 'The brak
 INSERT INTO question_answers (question_id, answers_id) VALUES (1, 1), (1, 2);
 INSERT INTO question_answers (question_id, answers_id) VALUES (2, 3), (2, 4);
 
+
+INSERT INTO question (id, question) VALUES (15, 'Does this engine have a low oil level?');
+INSERT INTO answer (id, answer_text) VALUES (32, 'Yes');
+INSERT INTO answer (id, answer_text) VALUES (33, 'No');
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (15, 32), (15, 33);
+
+INSERT INTO question (id, question) VALUES (14, 'Does the oil light come on?');
+INSERT INTO answer (id, answer_text) VALUES (30, 'Yes');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (31, 'No', 15);
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (14, 30), (14, 31);
+
+
 -- 
 -- sounds like menu
 -- 
 INSERT INTO question (id, question) VALUES (4, 'What do you hear?');
 INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (8, 'Squealing', 1);
-INSERT INTO question_answers (question_id, answers_id) VALUES (4, 8);
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (29, 'Tapping', 14);
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (4, 8), (4, 29);
 
 -- 
 -- main menu
@@ -34,8 +50,9 @@ INSERT INTO answer (id, answer_text) VALUES (7, 'Smells like');
 
 INSERT INTO question_answers (question_id, answers_id) VALUES (3, 5), (3, 6), (3, 7);
 
--- answer count = 23
--- auestion count = 11
+-- answer count = 33
+-- question count = 15
+-- instructions count = 15
 
 -- 
 -- Insturctions
@@ -44,6 +61,11 @@ INSERT INTO instructions (id, part, instructions) VALUES (1, 'DRIVE_BELT', 'Ma n
 INSERT INTO instructions (id, part, instructions) VALUES (2, 'BREAK_PADS', 'Ma nzm brate 2');
 INSERT INTO instructions (id, part, instructions) VALUES (3, 'NONE', 'You are overreacting');
 INSERT INTO instructions (id, part, instructions) VALUES (4, 'MAJOR_DRIVE_BELT', 'Ma nzm brate ovo je vec ozbiljno');
+INSERT INTO instructions (id, part, instructions) VALUES (13, 'ENGINE_LUBRICATION', 'Ma nzm brate 3');
+INSERT INTO instructions (id, part, instructions) VALUES (14, 'ADD_OIL', 'Ma nzm brate 4');
+INSERT INTO instructions (id, part, instructions) VALUES (15, 'LOOSE_VALVE', 'Ma nzm brate 5');
+INSERT INTO instructions (id, part, instructions) VALUES (16, 'MAJOR_ENGINE_LUBRICATION', 'Ma nzm brate ovo je vec ozbiljno');
+
 
 --
 -- obd

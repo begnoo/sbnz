@@ -5,10 +5,12 @@ import { useState, useEffect } from "react";
 import { readQuestion } from "../services/questionService";
 import { addFailure } from "../services/failureSevice";
 import InstructionsInfo from "../components/InstructionsInfo";
+import { useParams } from "react-router";
 
 export default function DiagnosePage() {
 
-    const [questionId, setQuestionId] = useState(5);
+    const { mode } = useParams();
+    const [questionId, setQuestionId] = useState(mode == "user" ? 3 : 5);
     const [failureRequest, setFailureRequest] = useState(
         {
             vehicleManufacturer: "DEFAULT",
@@ -53,6 +55,14 @@ export default function DiagnosePage() {
     );
     const [instructions, setInstructions] = useState();
 
+    useEffect(() => {
+        if (mode == "user") {
+            setQuestionId(3);
+        } else {
+            setQuestionId(5);
+        }
+        
+    }, [mode]);
 
     useEffect(() => {
         if (questionId !== -1) {
@@ -63,7 +73,7 @@ export default function DiagnosePage() {
             postFailure(failureRequest);
         }
         
-    }, [questionId])
+    }, [questionId]);
 
     return (
         <Center>
@@ -122,7 +132,7 @@ export default function DiagnosePage() {
                             });
                             setInstructions(null);
                             updateQuestionStack([]);
-                            setQuestionId(3);
+                            setQuestionId(mode == "user" ? 3 : 5);
                         }}
                     >Reset</Button>
                 </>

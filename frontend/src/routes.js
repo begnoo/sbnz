@@ -1,10 +1,14 @@
-export const HOME_PAGE = "/";
-export const CSR_PAGE = "/csr-user";
-export const CSR_ADMIN_PAGE = "/csr-admin/:id";
+export const HOME_PAGE = "/:mode";
+export const USER_PAGE = "/user";
+export const OBD_PAGE = "/obd";
 
 export const NAVBAR_ROUTES = [
     { 
-        name: "Home",
-        href: HOME_PAGE,
+        name: "USER",
+        href: USER_PAGE,
+    },
+    { 
+        name: "OBD",
+        href: OBD_PAGE,
     }
 ];
