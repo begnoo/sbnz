@@ -112,3 +112,5 @@ INSERT INTO instructions (id, part, instructions) VALUES (9, 'CATALYZER', 'Check
 INSERT INTO instructions (id, part, instructions) VALUES (10, 'FUEL_PUMP', 'Check if your fuel pump is working properly.');
 INSERT INTO instructions (id, part, instructions) VALUES (11, 'MAF', 'Your Mass Air Flow sensor is probably faulty.');
 INSERT INTO instructions (id, part, instructions) VALUES (12, 'PCV_LEAK', 'Your PCV valve is faulty.');
+INSERT INTO instructions (id, part, instructions) VALUES (17, 'MAJOR_SPARK_PLUGS', 'Your spark plugs have broken 3 times already.
+                                                Try installing better spark plugs and visit your mechanic if the problem persists.');
