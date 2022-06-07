@@ -82,7 +82,6 @@ no-loop true
     System.out.println("RULE EXECUTED: DETECTED EXTREME WARNING");
     boolean over = $average.doubleValue() >= 220;
     insert(new ExtremeAverageWarningEvent(over ? $average.doubleValue() - 220 : 100 - $average.doubleValue(), over ? ExtremeType.OVER : ExtremeType.UNDER));
-    System.out.println("OVER LIMIT: " + $average.doubleValue() - 220);
 
 end
 
