@@ -76,6 +76,68 @@ rule "SquelingNoise -> None"
     }
 end
 
+
+rule "Smells Like -> Rotten eggs -> Yes"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 19  && answerValue=="Yes" && !used) 
+  then
+    System.out.println("RULE EXECUTED: AIR_FILTER");
+    modify($failure){
+      setPart(PartEnum.AIR_FILTER);
+    }
+end
+
+rule "Smells Like -> Rotten eggs -> No"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 19  && answerValue=="No" && !used) 
+  then
+    System.out.println("RULE EXECUTED: FUEL_INJECTION_SENSOR");
+    modify($failure){
+      setPart(PartEnum.FUEL_INJECTION_SENSOR);
+    }
+end
+
+rule "Smells Like -> Muggy"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 18  && answerValue=="Muddy smell from A/C vents, along with poor cooling" && !used) 
+  then
+    System.out.println("RULE EXECUTED: DRAIN_PAN_AC");
+    modify($failure){
+      setPart(PartEnum.DRAIN_PAN_AC);
+    }
+end
+
+rule "Steam -> under the hood"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 17  && answerValue=="From under the hood" && !used) 
+  then
+    System.out.println("RULE EXECUTED: RADIATOR_CAP");
+    modify($failure){
+      setPart(PartEnum.RADIATOR_CAP);
+    }
+end
+
+rule "Steam -> exhaust"
+  lock-on-active true
+  no-loop true
+  when
+    $failure: Failure(questionId == 17  && answerValue=="From the exhaust" && !used) 
+  then
+    System.out.println("RULE EXECUTED: NONE_EXHAUST");
+    modify($failure){
+      setPart(PartEnum.NONE_EXHAUST);
+    }
+end
+
+
 rule "TappingSound -> Oil Light -> Yes -> ENGINE_LUBRICATION"
   lock-on-active true
   no-loop true

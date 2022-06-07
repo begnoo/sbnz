@@ -41,30 +41,76 @@ INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (29, 'Tapping
 INSERT INTO question_answers (question_id, answers_id) VALUES (4, 8), (4, 29);
 
 -- 
+-- Looks like
+-- 
+
+INSERT INTO question (id, question) VALUES (17, 'Where is the steam coming from?');
+INSERT INTO answer (id, answer_text) VALUES (35, 'From under the hood');
+INSERT INTO answer (id, answer_text) VALUES (36, 'From the exhaust');
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (17, 35), (17, 36);
+
+
+INSERT INTO question (id, question) VALUES (16, 'What do you see?');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (34, 'Steam', 17);
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (16, 34);
+
+-- 
+-- Looks like
+-- 
+
+INSERT INTO question (id, question) VALUES (19, 'Check the air filter. Is it dirty?');
+INSERT INTO answer (id, answer_text) VALUES (39, 'Yes');
+INSERT INTO answer (id, answer_text) VALUES (40, 'No');
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (19, 39), (19, 40);
+
+INSERT INTO question (id, question) VALUES (18, 'What do you smell?');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (37, 'Rotten egg smell', 19);
+INSERT INTO answer (id, answer_text) VALUES (38, 'Muddy smell from A/C vents, along with poor cooling');
+
+
+INSERT INTO question_answers (question_id, answers_id) VALUES (18, 37), (18, 38);
+
+
+-- 
 -- main menu
 -- 
 INSERT INTO question (id, question) VALUES (3, 'What type of symptom do you have?');
 INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (5, 'Sounds like', 4);
-INSERT INTO answer (id, answer_text) VALUES (6, 'Looks like');
-INSERT INTO answer (id, answer_text) VALUES (7, 'Smells like');
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (6, 'Looks like', 16);
+INSERT INTO answer (id, answer_text, follow_up_question_id) VALUES (7, 'Smells like', 18);
 
 INSERT INTO question_answers (question_id, answers_id) VALUES (3, 5), (3, 6), (3, 7);
 
--- answer count = 33
--- question count = 15
--- instructions count = 15
+-- answer count = 40
+-- question count = 19
+-- instructions count = 16
 
 -- 
 -- Insturctions
 -- 
-INSERT INTO instructions (id, part, instructions) VALUES (1, 'DRIVE_BELT', 'Ma nzm brate 1');
-INSERT INTO instructions (id, part, instructions) VALUES (2, 'BREAK_PADS', 'Ma nzm brate 2');
-INSERT INTO instructions (id, part, instructions) VALUES (3, 'NONE', 'You are overreacting');
-INSERT INTO instructions (id, part, instructions) VALUES (4, 'MAJOR_DRIVE_BELT', 'Ma nzm brate ovo je vec ozbiljno');
-INSERT INTO instructions (id, part, instructions) VALUES (13, 'ENGINE_LUBRICATION', 'Ma nzm brate 3');
-INSERT INTO instructions (id, part, instructions) VALUES (14, 'ADD_OIL', 'Ma nzm brate 4');
-INSERT INTO instructions (id, part, instructions) VALUES (15, 'LOOSE_VALVE', 'Ma nzm brate 5');
-INSERT INTO instructions (id, part, instructions) VALUES (16, 'MAJOR_ENGINE_LUBRICATION', 'Ma nzm brate ovo je vec ozbiljno');
+INSERT INTO instructions (id, part, instructions) VALUES (1, 'DRIVE_BELT', 'This generally indicates either a worn drive belt or faulty alternator. Apply some silicone spray on the underside of the drive belt. This may provide you with some temporary relief of this squealing noise.');
+INSERT INTO instructions (id, part, instructions) VALUES (2, 'BREAK_PADS', 'This vehicle needs new brake pads. The noise you are hearing is the brake pad wear sensor. It is designed to let you know your pads are wearing thin.');
+INSERT INTO instructions (id, part, instructions) VALUES (3, 'NONE', 'Everything is normal.');
+INSERT INTO instructions (id, part, instructions) VALUES (4, 'MAJOR_DRIVE_BELT', 'You should change your drive belt.');
+INSERT INTO instructions (id, part, instructions) VALUES (13, 'ENGINE_LUBRICATION', 'You should check your oil pump.');
+INSERT INTO instructions (id, part, instructions) VALUES (14, 'ADD_OIL', 'You should add oil to your vehicle.');
+INSERT INTO instructions (id, part, instructions) VALUES (15, 'LOOSE_VALVE', 'Loose valves or a leaking exhaust manifold are likely the issue.');
+INSERT INTO instructions (id, part, instructions) VALUES (16, 'MAJOR_ENGINE_LUBRICATION', 'Your oil pump is malfunctioning, and could cause further problems.');
+
+INSERT INTO instructions (id, part, instructions) VALUES (17, 'RADIATOR_CAP', 'Check the radiator cap when the engine is cold. If anything seems odd about the radiator cap, replace it and see if this corrects the boil over problem.');
+INSERT INTO instructions (id, part, instructions) VALUES (18, 'NONE_EXHAUST', 'This is normal and just condensation steaming off.');
+
+INSERT INTO instructions (id, part, instructions) VALUES (19, 'AIR_FILTER', 'Replace the air filter.');
+INSERT INTO instructions (id, part, instructions) VALUES (20, 'FUEL_INJECTION_SENSOR', 'Have the fuel injection sensor checked by a mechanic.');
+INSERT INTO instructions (id, part, instructions) VALUES (21, 'DRAIN_PAN_AC', 'The drain pan of the A/C evaporator unit is not draining. It is best to have an A/C specialist look at this, as the clog may be further up in the system and difficult to access.');
+
+
+
+
+
 
 
 --
@@ -112,5 +158,5 @@ INSERT INTO instructions (id, part, instructions) VALUES (9, 'CATALYZER', 'Check
 INSERT INTO instructions (id, part, instructions) VALUES (10, 'FUEL_PUMP', 'Check if your fuel pump is working properly.');
 INSERT INTO instructions (id, part, instructions) VALUES (11, 'MAF', 'Your Mass Air Flow sensor is probably faulty.');
 INSERT INTO instructions (id, part, instructions) VALUES (12, 'PCV_LEAK', 'Your PCV valve is faulty.');
-INSERT INTO instructions (id, part, instructions) VALUES (17, 'MAJOR_SPARK_PLUGS', 'Your spark plugs have broken 3 times already.
+INSERT INTO instructions (id, part, instructions) VALUES (22, 'MAJOR_SPARK_PLUGS', 'Your spark plugs have broken 3 times already.
                                                 Try installing better spark plugs and visit your mechanic if the problem persists.');
