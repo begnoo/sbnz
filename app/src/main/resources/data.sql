@@ -1,7 +1,11 @@
+INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+INSERT INTO roles (name) VALUES ('ROLE_USER');
+
 -- 
 -- users
--- 
-INSERT INTO users (id, email, password, first_name, last_name) VALUES (1, 'admin@admin.com', 'admin123', 'Mirko', 'Mirkovic');
+-- admin123 
+INSERT INTO users (id, email, password, first_name, last_name) VALUES (1, 'admin@admin.com', '$2a$10$zdgHYg.ORTSj8zGPz4vvqe./lzKGBTKI5pr7HZA9OX/J0pENnsVZK', 'Mirko', 'Mirkovic');
+INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
 
 -- 
 -- q&a

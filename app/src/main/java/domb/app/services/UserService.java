@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import domb.app.model.User;
 import domb.app.repositories.UserRepository;
 
 @Service
@@ -20,6 +21,10 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findUserByEmail(username).orElse(null);
+    }
+
+    public User findByEmail(String username) {
         return userRepository.findUserByEmail(username).orElse(null);
     }
     
