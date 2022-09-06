@@ -39,7 +39,6 @@ export default function DiagnosePage() {
                     isClosable: true,
                   });
                 setInstructions(res);
-                console.log(res);
             },
             onError: (err) => {
                 toast({
@@ -66,7 +65,6 @@ export default function DiagnosePage() {
 
     useEffect(() => {
         if (questionId !== -1) {
-            console.log("wut " + questionId);
             refetch();
         }
         else {

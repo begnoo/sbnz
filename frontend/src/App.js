@@ -4,6 +4,7 @@ import { colors, config } from './theme.js';
 import Router from './components/Router.jsx';
 import Layout from './components/layout/index.jsx';
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { AuthProvider } from './providers/AuthProvider.jsx';
 
 const theme = extendTheme({ colors, config });
 const queryClient = new QueryClient(
@@ -19,13 +20,15 @@ const queryClient = new QueryClient(
 function App() {
   return (
         <ChakraProvider theme={theme}>
-          <BrowserRouter>
-            <Layout>
-              <QueryClientProvider client={queryClient}>
-                <Router />
-              </QueryClientProvider>
-            </Layout>
-          </BrowserRouter>
+          <AuthProvider>
+            <BrowserRouter>
+              <Layout>
+                <QueryClientProvider client={queryClient}>
+                  <Router />
+                </QueryClientProvider>
+              </Layout>
+            </BrowserRouter>
+          </AuthProvider>
         </ChakraProvider>
 
   );
