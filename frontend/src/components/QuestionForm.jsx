@@ -2,11 +2,12 @@ import { Box } from "@chakra-ui/react";
 
 export default function QuestionForm({question, answers, callback}) {
 
+
     const changeQuestion = (answer) => {
         const {followUpQuestion} = answer;
 
         if (followUpQuestion == null) {
-            callback(-1, answer.answerText);
+            callback(-1, answer.answerText, answer.id);
         }
         else {
             callback(followUpQuestion.id);

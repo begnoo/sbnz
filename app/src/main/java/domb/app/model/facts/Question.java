@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -20,6 +22,7 @@ public class Question extends BaseEntity {
     private String question;
     
     @OneToMany
+    @Cascade(CascadeType.ALL)
     private List<Answer> answers;
 
     public Question() {

@@ -375,7 +375,7 @@ rule "P0171 -> maf faulty"
   lock-on-active true
   no-loop true
 when 
-  $failure: Failure(questionId == 13 && answerValue == "Yes" && !used)
+  $failure: Failure(questionId == 13 && answerValue == "No" && !used)
 then
   System.out.println("RULE EXECUTED: faulty maf sensor");
   modify($failure) {
@@ -387,7 +387,7 @@ rule "P0171 -> pcv valve leaks -> RESET_OBD"
   lock-on-active true
   no-loop true
 when 
-  $failure: Failure(questionId == 13 && answerValue == "No" && !used)
+  $failure: Failure(questionId == 13 && answerValue == "Yes" && !used)
 then
   System.out.println("RULE EXECUTED: reset obd");
   modify($failure) {

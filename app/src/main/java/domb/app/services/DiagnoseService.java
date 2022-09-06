@@ -12,6 +12,7 @@ import domb.app.model.enums.PartEnum;
 import domb.app.model.vehicle.Failure;
 import domb.app.repositories.FailureRepository;
 import domb.app.repositories.InstructionsRepository;
+
 @Service
 public class DiagnoseService {
   
