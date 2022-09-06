@@ -11,7 +11,6 @@ import org.hibernate.annotations.Where;
 import org.kie.api.definition.type.Role;
 
 import domb.app.model.BaseEntity;
-import domb.app.model.enums.PartEnum;
 
 @Entity
 @SQLDelete(sql = "UPDATE failure SET active = false WHERE id = ?")
@@ -20,10 +19,10 @@ import domb.app.model.enums.PartEnum;
 public class Failure extends BaseEntity {
 
     @Column
-    private PartEnum part;
+    private String part;
 
     @Column
-    private PartEnum triggeredEvent;
+    private String triggeredEvent;
 
     @Column
     private String vehicleManufacturer;
@@ -49,19 +48,19 @@ public class Failure extends BaseEntity {
     public Failure() {
     }
 
-    public PartEnum getPart() {
+    public String getPart() {
         return this.part;
     }
 
-    public void setPart(PartEnum part) {
+    public void setPart(String part) {
         this.part = part;
     }
 
-    public PartEnum getTriggeredEvent() {
+    public String getTriggeredEvent() {
         return this.triggeredEvent;
     }
 
-    public void setTriggeredEvent(PartEnum part) {
+    public void setTriggeredEvent(String part) {
         this.triggeredEvent = part;
     }
 

@@ -1,17 +1,16 @@
 package domb.app.responses;
 
-import domb.app.model.enums.PartEnum;
 
 public class InstructionsResponse {
     
-    private PartEnum part;
+    private String part;
     private String instructions;
 
-    public PartEnum getPart() {
+    public String getPart() {
         return this.part;
     }
 
-    public void setPart(PartEnum part) {
+    public void setPart(String part) {
         this.part = part;
     }
 

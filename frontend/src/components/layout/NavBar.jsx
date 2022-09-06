@@ -24,7 +24,7 @@ export default function NavBar() {
         })
     
         newSocket.on('event', (event) => {
-            console.log(event)
+            console.log(event);
             toast({
                 title: `Device ${event.type} alarm.`,
                 status: 'warning',

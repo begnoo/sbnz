@@ -5,7 +5,6 @@ import java.util.Set;
 import function domb.rules.DroolsUtils.debugLhsValue;
 import domb.app.model.vehicle.Failure;
 import domb.app.model.vehicle.SensorValue;
-import domb.app.model.enums.PartEnum;
 import domb.app.model.enums.ExtremeType;
 import domb.app.model.enums.ExtremeType;
 import domb.app.services.DiagnoseService;
@@ -20,14 +19,14 @@ global DiagnoseService diagnoseService;
 rule "ENGINE WARNING"
   no-loop true
   when
-    $newFailure: Failure(part == PartEnum.MAJOR_DRIVE_BELT || part == PartEnum.MAJOR_ENGINE_LUBRICATION) over window:length(1)
+    $newFailure: Failure(part == "MAJOR_DRIVE_BELT" || part == "MAJOR_ENGINE_LUBRICATION") over window:length(1)
      
     and
 
     $previouesBeltFailures: Set() from accumulate(
         $previouesFailure: Failure(
             this != $newFailure,
-            part == PartEnum.MAJOR_DRIVE_BELT,
+            part == "MAJOR_DRIVE_BELT",
             vehicleManufacturer == $newFailure.vehicleManufacturer,
             vehicleModel == $newFailure.vehicleModel,
             this before[1s, 30d] $newFailure 
@@ -39,7 +38,7 @@ rule "ENGINE WARNING"
     $previouesLubractionFailures: Set() from accumulate(
         $previouesLubricationFailure: Failure(
             this != $newFailure,
-            part == PartEnum.MAJOR_ENGINE_LUBRICATION,
+            part == "MAJOR_ENGINE_LUBRICATION",
             vehicleManufacturer == $newFailure.vehicleManufacturer,
             vehicleModel == $newFailure.vehicleModel,
             this before[1s, 30d] $newFailure 
@@ -51,7 +50,7 @@ rule "ENGINE WARNING"
     eval($previouesBeltFailures.size() > 0 && $previouesLubractionFailures.size() > 0)
   then
     System.out.println("RULE EXECUTED: DETECTED ENGINE WARNING");
-    insert(new PartWarningEvent(PartEnum.ENGINE_WARNING));
+    insert(new PartWarningEvent("ENGINE_WARNING"));
     diagnoseService.emit("DETECTED ENGINE WARNING");
 
 
@@ -98,12 +97,12 @@ rule "ESSENTIAL FIX"
 no-loop true
   when
     $extremeAverageWarningEvent: ExtremeAverageWarningEvent( sensorType == "TEMPERATURE") and
-    $partWarningEvent: PartWarningEvent( part == PartEnum.ENGINE_WARNING, this before[1s, 30d] $extremeAverageWarningEvent)
+    $partWarningEvent: PartWarningEvent( part == "ENGINE_WARNING", this before[1s, 30d] $extremeAverageWarningEvent)
  
   then
     System.out.println("RULE EXECUTED: ESSENTIAL FIX ENGINE");
     //zabrana korisniku da dijagnozira kola preko korisnickog unosa, i upozorenje da hitno ide kod mehanicara
-    insert(new EssentialFixEvent(PartEnum.ESSENTIAL_FIX_ENGINE));
+    insert(new EssentialFixEvent("ESSENTIAL_FIX_ENGINE"));
     diagnoseService.emit("ESSENTIAL FIX ENGINE");
     
 end

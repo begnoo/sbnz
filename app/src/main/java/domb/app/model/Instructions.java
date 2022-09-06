@@ -8,8 +8,6 @@ import javax.persistence.Enumerated;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import domb.app.model.enums.PartEnum;
-
 @Entity
 @SQLDelete(sql = "UPDATE instructions SET active = false WHERE id = ?")
 @Where(clause = "active = true")
@@ -18,16 +16,15 @@ public class Instructions extends BaseEntity {
     @Column
     private String instructions;
     
-    @Enumerated(EnumType.STRING)
     @Column
-    private PartEnum part;
+    private String part;
     // private CauseEnum cause;
 
 
     public Instructions() {
     }
 
-    public Instructions(String instructions, PartEnum part) {
+    public Instructions(String instructions, String part) {
         this.instructions = instructions;
         this.part = part;
     }
@@ -40,11 +37,11 @@ public class Instructions extends BaseEntity {
         this.instructions = instructions;
     }
 
-    public PartEnum getPart() {
+    public String getPart() {
         return this.part;
     }
 
-    public void setPart(PartEnum part) {
+    public void setPart(String part) {
         this.part = part;
     }
 

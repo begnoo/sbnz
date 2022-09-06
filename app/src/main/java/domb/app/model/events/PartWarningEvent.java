@@ -2,25 +2,24 @@ package domb.app.model.events;
 
 import org.kie.api.definition.type.Role;
 
-import domb.app.model.enums.PartEnum;
 
 @Role(Role.Type.EVENT)
 public class PartWarningEvent extends Event {
     
-    private PartEnum part;
+    private String part;
 
     public PartWarningEvent() {
     }
 
-    public PartWarningEvent(PartEnum part) {
+    public PartWarningEvent(String part) {
         this.part = part;
     }
 
-    public PartEnum getPart() {
+    public String getPart() {
         return this.part;
     }
 
-    public void setPart(PartEnum part) {
+    public void setPart(String part) {
         this.part = part;
     }
     

@@ -51,7 +51,6 @@ export default function DiagnosePage() {
           isClosable: true,
         });
         setInstructions(res);
-        console.log(res);
       },
       onError: (err) => {
         toast({

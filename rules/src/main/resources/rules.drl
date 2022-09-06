@@ -2,7 +2,6 @@ package domb.rules;
 
 import function domb.rules.DroolsUtils.debugLhsValue;
 import domb.app.model.vehicle.Failure;
-import domb.app.model.enums.PartEnum;
 
 
 rule "SquelingNoise -> DriveBelt"
@@ -13,7 +12,7 @@ rule "SquelingNoise -> DriveBelt"
   then
     System.out.println("RULE EXECUTED: DRIVE_BELT");
     modify($failure){
-      setPart(PartEnum.DRIVE_BELT);
+      setPart("DRIVE_BELT");
     }
 
 end
@@ -22,11 +21,11 @@ end
 rule "SquelingNoise -> DRIVE_BELT -> Continuing failure"
   no-loop true
   when
-    $failure: Failure(part == PartEnum.DRIVE_BELT, $releatedFailures: releatedFailures)
+    $failure: Failure(part == "DRIVE_BELT", $releatedFailures: releatedFailures)
     $count: Number(intValue > 2) from accumulate(
       $f: Failure(
         $t: this,
-        part == PartEnum.DRIVE_BELT,
+        part == "DRIVE_BELT",
         used == false
       ) from $releatedFailures,
       count($t)
@@ -35,14 +34,14 @@ rule "SquelingNoise -> DRIVE_BELT -> Continuing failure"
     System.out.println("RULE EXECUTED: MAJOR DRIVE_BELT FAILURE");
     modify($failure){
       // mozda dodati severety na failure
-      setPart(PartEnum.MAJOR_DRIVE_BELT);
+      setPart("MAJOR_DRIVE_BELT");
     }
 end
 
 rule "SquelingNoise -> DRIVE_BELT -> Continuing failure -> update used failures"
   no-loop true
   when
-    $failure: Failure(part == PartEnum.MAJOR_DRIVE_BELT, $releatedFailures: releatedFailures)
+    $failure: Failure(part == "MAJOR_DRIVE_BELT", $releatedFailures: releatedFailures)
   then
     System.out.println("RULE EXECUTED: UPDATE PREVIOUS DRIVE_BELTS");
     for (int i = 0; i < $failure.getReleatedFailures().size(); i++) {
@@ -59,7 +58,7 @@ rule "SquelingNoise -> BreakPads"
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes");
     modify($failure){
-      setPart(PartEnum.BREAK_PADS);
+      setPart("BREAK_PADS");
     }
 
 end
@@ -72,7 +71,7 @@ rule "SquelingNoise -> None"
   then
     System.out.println("RULE EXECUTED: SquelingNoise The Brakes Normal");
     modify($failure){
-      setPart(PartEnum.NONE);
+      setPart("NONE");
     }
 end
 
@@ -85,7 +84,7 @@ rule "Smells Like -> Rotten eggs -> Yes"
   then
     System.out.println("RULE EXECUTED: AIR_FILTER");
     modify($failure){
-      setPart(PartEnum.AIR_FILTER);
+      setPart("AIR_FILTER");
     }
 end
 
@@ -97,7 +96,7 @@ rule "Smells Like -> Rotten eggs -> No"
   then
     System.out.println("RULE EXECUTED: FUEL_INJECTION_SENSOR");
     modify($failure){
-      setPart(PartEnum.FUEL_INJECTION_SENSOR);
+      setPart("FUEL_INJECTION_SENSOR");
     }
 end
 
@@ -109,7 +108,7 @@ rule "Smells Like -> Muggy"
   then
     System.out.println("RULE EXECUTED: DRAIN_PAN_AC");
     modify($failure){
-      setPart(PartEnum.DRAIN_PAN_AC);
+      setPart("DRAIN_PAN_AC");
     }
 end
 
@@ -121,7 +120,7 @@ rule "Steam -> under the hood"
   then
     System.out.println("RULE EXECUTED: RADIATOR_CAP");
     modify($failure){
-      setPart(PartEnum.RADIATOR_CAP);
+      setPart("RADIATOR_CAP");
     }
 end
 
@@ -133,7 +132,7 @@ rule "Steam -> exhaust"
   then
     System.out.println("RULE EXECUTED: NONE_EXHAUST");
     modify($failure){
-      setPart(PartEnum.NONE_EXHAUST);
+      setPart("NONE_EXHAUST");
     }
 end
 
@@ -146,7 +145,7 @@ rule "TappingSound -> Oil Light -> Yes -> ENGINE_LUBRICATION"
   then
     System.out.println("RULE EXECUTED: TappingSound ENGINE_LUBRICATION");
     modify($failure){
-      setPart(PartEnum.ENGINE_LUBRICATION);
+      setPart("ENGINE_LUBRICATION");
     }
 
 end
@@ -154,11 +153,11 @@ end
 rule "TappingSound -> ENGINE_LUBRICATION -> Continuing failure"
   no-loop true
   when
-    $failure: Failure(part == PartEnum.ENGINE_LUBRICATION, $releatedFailures: releatedFailures)
+    $failure: Failure(part == "ENGINE_LUBRICATION", $releatedFailures: releatedFailures)
     $count: Number(intValue > 2) from accumulate(
       $f: Failure(
         $t: this,
-        part == PartEnum.ENGINE_LUBRICATION,
+        part == "ENGINE_LUBRICATION",
         used == false
       ) from $releatedFailures,
       count($t)
@@ -167,14 +166,14 @@ rule "TappingSound -> ENGINE_LUBRICATION -> Continuing failure"
     System.out.println("RULE EXECUTED: MAJOR_ENGINE_LUBRICATION FAILURE");
     modify($failure){
       // mozda dodati severety na failure
-      setPart(PartEnum.MAJOR_ENGINE_LUBRICATION);
+      setPart("MAJOR_ENGINE_LUBRICATION");
     }
 end
 
 rule "TappingSound -> ENGINE_LUBRICATION -> Continuing failure -> update used failures"
   no-loop true
   when
-    $failure: Failure(part == PartEnum.MAJOR_ENGINE_LUBRICATION, $releatedFailures: releatedFailures)
+    $failure: Failure(part == "MAJOR_ENGINE_LUBRICATION", $releatedFailures: releatedFailures)
   then
     System.out.println("RULE EXECUTED: UPDATE PREVIOUS ENGINE_LUBRICATION");
     for (int i = 0; i < $failure.getReleatedFailures().size(); i++) {
@@ -190,7 +189,7 @@ rule "TappingSound -> Oil Light -> Low Oil Level -> Yes"
   then
     System.out.println("RULE EXECUTED: TappingSound ADD_OIL");
     modify($failure){
-      setPart(PartEnum.ADD_OIL);
+      setPart("ADD_OIL");
     }
 
 end
@@ -203,7 +202,7 @@ rule "TappingSound -> Oil Light -> Low Oil Level -> No"
   then
     System.out.println("RULE EXECUTED: TappingSound LOOSE_VALVE");
     modify($failure){
-      setPart(PartEnum.LOOSE_VALVE);
+      setPart("LOOSE_VALVE");
     }
 
 end
@@ -216,7 +215,7 @@ when
 then
   System.out.println("RULE EXECUTED: P0300 everything normal");
   modify($failure) {
-    setPart(PartEnum.RESET_OBD);
+    setPart("RESET_OBD");
   }
 end
 
@@ -228,7 +227,7 @@ when
 then
   System.out.println("RULE EXECUTED: P0300 faulty spark plugs");
   modify($failure) {
-    setPart(PartEnum.SPARK_PLUGS);
+    setPart("SPARK_PLUGS");
   }
 end
 
@@ -240,18 +239,18 @@ when
 then
   System.out.println("RULE EXECUTED: P0300 see mechanic");
   modify($failure) {
-    setPart(PartEnum.UNKNOWN);
+    setPart("UNKNOWN");
   }
 end
 
 rule "P0300 -> rough drive -> continuing spark plug failure"
   no-loop true
   when
-    $failure: Failure(part == PartEnum.SPARK_PLUGS, $releatedFailures: releatedFailures)
+    $failure: Failure(part == "SPARK_PLUGS", $releatedFailures: releatedFailures)
     $count: Number(intValue > 2) from accumulate(
       $f: Failure(
         $t: this,
-        part == PartEnum.SPARK_PLUGS,
+        part == "SPARK_PLUGS",
         used == false
       ) from $releatedFailures,
       count($t)
@@ -260,14 +259,14 @@ rule "P0300 -> rough drive -> continuing spark plug failure"
     System.out.println("RULE EXECUTED: MAJOR spark plugs failure");
     modify($failure){
       // mozda dodati severety na failure
-      setPart(PartEnum.MAJOR_SPARK_PLUGS);
+      setPart("MAJOR_SPARK_PLUGS");
     }
 end
 
 rule "P0300 -> rough drive -> sparks not working again"
   no-loop true
   when
-    $failure: Failure(part == PartEnum.MAJOR_SPARK_PLUGS, $releatedFailures: releatedFailures)
+    $failure: Failure(part == "MAJOR_SPARK_PLUGS", $releatedFailures: releatedFailures)
   then
     System.out.println("RULE EXECUTED: update previous spark plugs");
     for (int i = 0; i < $failure.getReleatedFailures().size(); i++) {
@@ -283,7 +282,7 @@ when
 then 
   System.out.println("RULE EXECUTED: faulty gas tank");
   modify($failure) {
-    setPart(PartEnum.FUEL_TANK);
+    setPart("FUEL_TANK");
   }
 end
 
@@ -295,7 +294,7 @@ when
 then 
   System.out.println("RULE EXECUTED: reset obd");
   modify($failure) {
-    setPart(PartEnum.RESET_OBD);
+    setPart("RESET_OBD");
   }
 end
 
@@ -307,7 +306,7 @@ when
 then 
   System.out.println("RULE EXECUTED: faulty vapor sensor");
   modify($failure) {
-    setPart(PartEnum.VAPOR_SENSOR);
+    setPart("VAPOR_SENSOR");
   }
 end
 
@@ -319,7 +318,7 @@ when
 then 
   System.out.println("RULE EXECUTED: see mechanic");
   modify($failure) {
-    setPart(PartEnum.UNKNOWN);
+    setPart("UNKNOWN");
   }
 end
 
@@ -331,7 +330,7 @@ when
 then
   System.out.println("RULE EXECUTED: catalyzer faulty");
   modify($failure) {
-    setPart(PartEnum.CATALYZER);
+    setPart("CATALYZER");
   }
 end
 
@@ -343,7 +342,7 @@ when
 then
   System.out.println("RULE EXECUTED: reset OBD");
   modify($failure) {
-    setPart(PartEnum.RESET_OBD);
+    setPart("RESET_OBD");
   }
 end
 
@@ -355,7 +354,7 @@ when
 then
   System.out.println("RULE EXECUTED: faulty fuel pump");
   modify($failure) {
-    setPart(PartEnum.FUEL_PUMP);
+    setPart("FUEL_PUMP");
   }
 end
 
@@ -367,7 +366,7 @@ when
 then
   System.out.println("RULE EXECUTED: faulty pcv valve");
   modify($failure) {
-    setPart(PartEnum.PCV_LEAK);
+    setPart("PCV_LEAK");
   }
 end
 
@@ -379,7 +378,7 @@ when
 then
   System.out.println("RULE EXECUTED: faulty maf sensor");
   modify($failure) {
-    setPart(PartEnum.MAF);
+    setPart("MAF");
   }
 end
 
@@ -391,6 +390,6 @@ when
 then
   System.out.println("RULE EXECUTED: reset obd");
   modify($failure) {
-    setPart(PartEnum.RESET_OBD);
+    setPart("RESET_OBD");
   }
 end

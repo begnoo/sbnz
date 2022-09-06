@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import domb.app.model.Instructions;
-import domb.app.model.enums.PartEnum;
 import domb.app.model.vehicle.Failure;
 import domb.app.repositories.FailureRepository;
 import domb.app.repositories.InstructionsRepository;
@@ -38,6 +37,7 @@ public class DiagnoseService {
         List<Failure> releatedFailures = failureRepository.findByVehicleManufacturerAndVehicleModel(failure.getVehicleManufacturer(), failure.getVehicleModel())
                                         .orElse(new ArrayList<Failure>());
         failure.setReleatedFailures(releatedFailures);
+        System.out.println("Related: " + releatedFailures.size());
 
         kieSession.setGlobal("diagnoseService", this);
         kieSession.insert(failure);
@@ -45,13 +45,12 @@ public class DiagnoseService {
         System.out.println("Fact Count: " + kieSession.getFactCount());
         // kieSession.dispose();
 
-        if (failure.getPart() != PartEnum.NONE) {
+        if (!failure.getPart().equals("NONE")) {
             failureRepository.save(failure);
         }
-        failure.getTriggeredEvent();
         
         Instructions instr = instructionRepository.findByPart(failure.getPart()).orNull();
-        return instr != null ? instr : new Instructions("The system could not detect your car malfunction. Visit your mechanic.", PartEnum.UNKNOWN);
+        return instr != null ? instr : new Instructions("The system could not detect your car malfunction. Visit your mechanic.", "UNKNOWN");
     }
 
     public void emit(String event) {
