@@ -20,7 +20,6 @@ public class SensorValue extends BaseEntity {
     @Column
     private double reading;
 
-    //promeniti da se ovo radi sa id
     @Column
     private String vehicleManufacturer;
     

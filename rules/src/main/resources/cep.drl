@@ -7,12 +7,14 @@ import domb.app.model.vehicle.Failure;
 import domb.app.model.vehicle.SensorValue;
 import domb.app.model.enums.PartEnum;
 import domb.app.model.enums.ExtremeType;
+import domb.app.model.enums.ExtremeType;
+import domb.app.services.DiagnoseService;
 
 
 import domb.app.model.events.PartWarningEvent;
 import domb.app.model.events.ExtremeAverageWarningEvent;
 import domb.app.model.events.EssentialFixEvent;
-
+global DiagnoseService diagnoseService;
 
 
 rule "ENGINE WARNING"
@@ -50,6 +52,8 @@ rule "ENGINE WARNING"
   then
     System.out.println("RULE EXECUTED: DETECTED ENGINE WARNING");
     insert(new PartWarningEvent(PartEnum.ENGINE_WARNING));
+    diagnoseService.emit("DETECTED ENGINE WARNING");
+
 
 end
 
@@ -86,6 +90,7 @@ no-loop true
     System.out.println("RULE EXECUTED: DETECTED EXTREME WARNING");
     boolean over = $average.doubleValue() >= 220;
     insert(new ExtremeAverageWarningEvent(over ? $average.doubleValue() - 220 : 100 - $average.doubleValue(), over ? ExtremeType.OVER : ExtremeType.UNDER, $sensorType));
+    diagnoseService.emit("DETECTED EXTREME WARNING");
 
 end
 
@@ -99,5 +104,6 @@ no-loop true
     System.out.println("RULE EXECUTED: ESSENTIAL FIX ENGINE");
     //zabrana korisniku da dijagnozira kola preko korisnickog unosa, i upozorenje da hitno ide kod mehanicara
     insert(new EssentialFixEvent(PartEnum.ESSENTIAL_FIX_ENGINE));
-
+    diagnoseService.emit("ESSENTIAL FIX ENGINE");
+    
 end

@@ -1,12 +1,40 @@
-import { Button, Flex} from "@chakra-ui/react";
-import { useContext } from "react";
+import { Button, Flex, useToast} from "@chakra-ui/react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { CRED_ROUTES, NAVBAR_ROUTES} from "../../routes";
 
+// const host = "https://localhost:8082/";
+let sockets = [];
+
 export default function NavBar() {
 
     const { user, logout } = useContext(AuthContext);
+    const toast = useToast();
+
+    useEffect(() => {
+        let newSocket = (window).io.connect(`http://localhost:9092/events`);
+
+        newSocket.on('connect', () => {
+            console.log("connected")
+        })
+
+        newSocket.on('disconnent', () => {
+            console.log("molim")
+        })
+    
+        newSocket.on('event', (event) => {
+            console.log(event)
+            toast({
+                title: `Device ${event.type} alarm.`,
+                status: 'warning',
+                duration: 3000,
+                position: "top",
+                isClosable: true,
+                });
+        });
+        sockets.push(newSocket);
+    }, []);
     
     return (
         <Flex padding={"15px"} alignContent="space-between" justifyContent={"space-between"}>
