@@ -23,6 +23,9 @@ public class Failure extends BaseEntity {
     private PartEnum part;
 
     @Column
+    private PartEnum triggeredEvent;
+
+    @Column
     private String vehicleManufacturer;
     
     @Column
@@ -52,6 +55,14 @@ public class Failure extends BaseEntity {
 
     public void setPart(PartEnum part) {
         this.part = part;
+    }
+
+    public PartEnum getTriggeredEvent() {
+        return this.triggeredEvent;
+    }
+
+    public void setTriggeredEvent(PartEnum part) {
+        this.triggeredEvent = part;
     }
 
     public long getQuestionId() {
