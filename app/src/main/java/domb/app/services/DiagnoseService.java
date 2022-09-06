@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import domb.app.model.Instructions;
 import domb.app.model.enums.PartEnum;
-import domb.app.model.events.Event;
 import domb.app.model.vehicle.Failure;
 import domb.app.repositories.FailureRepository;
 import domb.app.repositories.InstructionsRepository;
 import domb.app.sockets.Notification;
 import domb.app.sockets.SocketsModule;
+
 @Service
 public class DiagnoseService {
   
