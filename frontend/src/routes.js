@@ -1,6 +1,7 @@
 export const HOME_PAGE = "/:mode";
 export const USER_PAGE = "/user";
 export const OBD_PAGE = "/obd";
+export const LOGIN_PAGE = "/login";
 
 export const NAVBAR_ROUTES = [
     { 
@@ -10,5 +11,12 @@ export const NAVBAR_ROUTES = [
     { 
         name: "OBD",
         href: OBD_PAGE,
-    }
+    },
+];
+
+export const CRED_ROUTES = [
+    { 
+        name: "LOGIN",
+        href: LOGIN_PAGE,
+    },
 ];
