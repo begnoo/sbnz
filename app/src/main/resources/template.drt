@@ -1,0 +1,25 @@
+template header
+
+questionId
+answerValue
+part
+
+package domb.app;
+
+import domb.app.model.vehicle.Failure;
+
+template "add-failure-rules"
+
+rule "Add failure @{questionId}-@{answerValue}"
+no-loop true
+when
+    $failure: Failure(questionId == @{questionId}  && answerValue == "@{answerValue}")
+then
+    System.out.println("RULE EXECUTED: ");
+    modify($failure) {
+      setPart("@{part}");
+    }
+end
+
+end template
+
