@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import domb.app.model.facts.Question;
 import domb.app.services.QuestionService;
 
-import javax.print.attribute.standard.Media;
 
 @RestController
 @RequestMapping("/questions")
