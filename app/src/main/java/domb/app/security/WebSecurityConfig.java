@@ -47,8 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests().antMatchers("/auth/**").permitAll()
                                 .antMatchers("/questions/**").permitAll()
                                 .antMatchers("/sensor-values/**").permitAll()
-                                .antMatchers("/diagnose/**").permitAll()                                
-            .anyRequest().authenticated().and().cors().and()
+                                .antMatchers("/diagnose/**").permitAll()
+                                .antMatchers("/template/**").permitAll()
+                .anyRequest().authenticated().and().cors().and()
             .addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class);
 
         http.csrf().disable();
